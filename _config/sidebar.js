@@ -3,11 +3,12 @@ const pages = config('pages') // Get Pages from config
 //Marketplace
 export default [
    {
-      title: 'qad.sidebar.adminAd',
+      title: 'qad.sidebar.admin.menu.manageAds',
       icon: 'fas fa-map-marked-alt',
       children: [
-        pages.qad.admin.categories.index,
-         pages.qad.admin.services.index,
+        pages.qad.categories,
+         pages.qad.services,
+         pages.qad.ads,
       ]
    }
 ]

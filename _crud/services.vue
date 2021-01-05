@@ -17,7 +17,6 @@
                },
                read: {
                   columns: [
-                    {name: 'actions', label: this.$tr('ui.form.actions'), align: 'left'},
                      {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
                      {
                         name: 'name',
@@ -30,6 +29,7 @@
                         name: 'createdAt', label: this.$tr('ui.form.createdAt'), field: 'createdAt', align: 'left',
                         format: val => val ? this.$trd(val) : '-',
                      },
+                     {name: 'actions', label: this.$tr('ui.form.actions'), align: 'left'},
                   ],
                   requestParams: {
                      include: '',
@@ -55,30 +55,7 @@
                         ]
                      }
 
-                  },
-                  slug: {
-                     value: '',
-                     type: 'input',
-                     isTranslatable: true,
-                     props: {
-                        label: `${this.$tr('ui.form.slug')}*`,
-                        //vIf: (this.crudInfo.typeForm == 'update'),
-                        rules: [
-                           val => !!val || this.$tr('ui.message.fieldRequired')
-                        ],
-                     },
-                  },
-                  description: {
-                     value: '',
-                     type: 'html',
-                     isTranslatable: true,
-                     props: {
-                        label: `${this.$tr('ui.form.description')}*`,
-                        rules: [
-                           val => !!val || this.$tr('ui.message.fieldRequired')
-                        ],
-                     }
-                  },
+                  }
                },
                formRight: {
                   parentId: {
@@ -89,12 +66,12 @@
                         options: [
                            {label: this.$tr('ui.label.disabled'), value: 0},
                         ],
-                        loadOptions: {
-                           apiRoute: 'apiRoutes.qad.services',
-                           select: {label: 'title', id: 'id'},
-                           requestParams: {include: 'parent'}
-                        }
                      },
+                     loadOptions: {
+                       apiRoute: 'apiRoutes.qad.services',
+                       select: {label: 'title', id: 'id'},
+                       requestParams: {}
+                     }
                   },
                   // mediasSingle: {
                   //    name: 'mediasSingle',

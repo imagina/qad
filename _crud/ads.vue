@@ -10,10 +10,10 @@
          crudData() {
             return {
                crudId: this.crudId,
-               apiRoute: 'apiRoutes.qad.categories',
-               permission: 'iads.categories',
+               apiRoute: 'apiRoutes.qad.ads',
+               permission: 'iads.ads',
                create: {
-                  title: this.$tr('qad.layout.create.category'),
+                  title: this.$tr('qad.layout.create.ad'),
                },
                read: {
                   columns: [
@@ -26,13 +26,24 @@
                         align: 'rigth'
                      },
                      {
+                        name: 'slug',
+                        label: this.$tr('ui.form.slug'),
+                        field: 'slug',
+                        style: 'width: 50px',
+                        align: 'rigth'
+                     },
+                     {
+                       name: 'user', label: this.$tr('qad.layout.form.user'), field: 'user', align: 'left',
+                       format: val => (val && val.fullName) ? val.fullName : ''
+                     },
+                     {
                         name: 'createdAt', label: this.$tr('ui.form.createdAt'), field: 'createdAt', align: 'left',
                         format: val => val ? this.$trd(val) : '-',
                      },
                      {name: 'actions', label: this.$tr('ui.form.actions'), align: 'left'},
                   ],
                   requestParams: {
-                     include: '',
+                     include: 'user',
                      filter: {
                         allTranslations: true,
                      }
@@ -40,7 +51,7 @@
                   filters: {}
                },
                update: {
-                  title: this.$tr('qad.layout.edit.category'),
+                  title: this.$tr('qad.layout.edit.ad'),
                },
                delete: true,
                formLeft: {
@@ -81,11 +92,11 @@
                   },
                },
                formRight: {
-                  parentId: {
+                  categoryId: {
                      value: 0,
                      type: 'select',
                      props: {
-                        label: this.$tr('ui.form.parent'),
+                        label: this.$tr('ui.form.category'),
                         options: [
                            {label: this.$tr('ui.label.disabled'), value: 0},
                         ],
@@ -93,26 +104,23 @@
                      loadOptions: {
                        apiRoute: 'apiRoutes.qad.categories',
                        select: {label: 'title', id: 'id'},
-                       requestParams: {include: 'parent'}
+                       requestParams: {}
                      }
                   },
-                  metaTitle: {
-                    value: '',
-                    isTranslatable: true,
-                    type: 'input',
-                    props : {
-                      label: this.$tr('ui.form.metaTitle'),
-                    }
-                  },
-                  metaDescription: {
-                    value: '',
-                    type: 'input',
-                    isTranslatable: true,
-                    props : {
-                      label: this.$tr('ui.form.metaDescription'),
-                      type: 'textarea',
-                      rows : 3
-                    }
+                  userId: {
+                     value: 0,
+                     type: 'select',
+                     props: {
+                        label: this.$tr('qad.layout.form.user'),
+                        options: [
+                           {label: this.$tr('ui.label.disabled'), value: 0},
+                        ],
+                     },
+                     loadOptions: {
+                       apiRoute: 'apiRoutes.quser.users',
+                       select: {label: 'fullName', id: 'id'},
+                       requestParams: {}
+                     }
                   },
                   // mediasSingle: {
                   //    name: 'mediasSingle',

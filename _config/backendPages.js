@@ -5,7 +5,7 @@ export default {
     path: '/qad/services/index',
     name: 'qad.admin.services.index',//
     page: () => import('@imagina/qad/_layouts/admin/services/index'),
-    layout: () => import('src/layouts/admin'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qad.sidebar.admin.services',
     icon: 'fas fa-store',
     authenticated: true
@@ -16,8 +16,19 @@ export default {
     path: '/qad/categories/index',
     name: 'qad.admin.categories.index',//
     page: () => import('@imagina/qad/_layouts/admin/categories/index'),
-    layout: () => import('src/layouts/admin'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qad.sidebar.admin.categories',
+    icon: 'fas fa-store',
+    authenticated: true
+  },
+  ads: {
+    permission: 'iads.ads.manage',
+    activated: true,//
+    path: '/qad/ads/index',
+    name: 'qad.admin.ads.index',//
+    page: () => import('@imagina/qad/_layouts/admin/ads/index'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'qad.sidebar.admin.ads',
     icon: 'fas fa-store',
     authenticated: true
   },
