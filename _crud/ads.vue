@@ -52,6 +52,7 @@
                },
                update: {
                   title: this.$tr('qad.layout.edit.ad'),
+                  // to : "qad.admin.ads.edit"
                },
                delete: true,
                formLeft: {
@@ -90,16 +91,39 @@
                         ],
                      }
                   },
+                  categories: {
+                    value: [],
+                    type: 'crud',
+                    props: {
+                      crudType: 'select',
+                      crudData: import('@imagina/qad/_crud/services'),
+                      crudProps: {
+                        label: this.$tr('qad.layout.form.services'),
+                        multiple: true,
+                        useChips: true
+                      },
+                    },
+                  },
                },
                formRight: {
+                 status: {
+                    value: "0",
+                    type: 'select',
+                    props: {
+                       label: this.$tr('qad.layout.form.status'),
+                       options: [
+                          {label: this.$tr('qad.layout.options.pending'), value: 0},
+                          {label: this.$tr('qad.layout.options.approved'), value: 1},
+                          {label: this.$tr('qad.layout.options.denied'), value: 2},
+                       ],
+                    }
+                 },
                   categoryId: {
                      value: 0,
                      type: 'select',
                      props: {
                         label: this.$tr('ui.form.category'),
-                        options: [
-                           {label: this.$tr('ui.label.disabled'), value: 0},
-                        ],
+                        options: [],
                      },
                      loadOptions: {
                        apiRoute: 'apiRoutes.qad.categories',
@@ -108,7 +132,7 @@
                      }
                   },
                   userId: {
-                     value: 0,
+                     value: "0",
                      type: 'select',
                      props: {
                         label: this.$tr('qad.layout.form.user'),
@@ -122,6 +146,125 @@
                        requestParams: {}
                      }
                   },
+                  provinceId: {
+                    value: null,
+                    type: 'select',
+                    props: {
+                      label: this.$tr('ui.label.department') + '*',
+                      rules: [
+                        val => !!val || this.$tr('ui.message.fieldRequired')
+                      ],
+                    },
+                    loadOptions: {
+                      apiRoute: 'apiRoutes.qlocations.provinces',
+                      select: {label: 'name', id: 'id'},
+                      requestParams: {filter: {country: 48}}//only Colombia country
+                    }
+                  },
+                  cityId: {
+                    value: null,
+                    type: 'select',
+                    props: {
+                      label: this.$tr('ui.form.city') + '*',
+                      readonly: (this.crudInfo.provinceId ? false : true),
+                      rules: [
+                        val => !!val || this.$tr('ui.message.fieldRequired')
+                      ],
+                    },
+                    loadOptions: {
+                      apiRoute: this.crudInfo.provinceId ? 'apiRoutes.qlocations.cities' : false,
+                      select: {label: 'name', id: 'id'},
+                      requestParams: {filter: {province_id: this.crudInfo.provinceId}}//only Colombia country
+                    }
+                  },
+                  name: {
+                     name: 'name',
+                     value: null,
+                     type: 'input',
+                     fakeFieldName : 'fields',
+                     props: {
+                        label: this.$tr('qad.layout.form.name')
+                     }
+                  },
+                  age: {
+                     name: 'age',
+                     value: null,
+                     type: 'input',
+                     fakeFieldName : 'fields',
+                     props: {
+                        label: this.$tr('qad.layout.form.age')
+                     }
+                  },
+                  phone: {
+                    name: 'phone',
+                    value: null,
+                    type: 'input',
+                    fakeFieldName : 'fields',
+                    props: {
+                      label: this.$tr('qad.layout.form.phone')
+                    }
+                  },
+                  note: {
+                    name: 'note',
+                    value: null,
+                    type: 'input',
+                    fakeFieldName : 'fields',
+                    props: {
+                      label: this.$tr('qad.layout.form.note')
+                    }
+                  },
+                  address: {
+                     name: 'address',
+                     value: null,
+                     type: 'input',
+                     fakeFieldName : 'fields',
+                     props: {
+                       label: this.$tr('qad.layout.form.address')
+                     }
+                  },
+                  customer_feedback: {
+                     name: 'customer_feedback',
+                     value: null,
+                     type: 'input',
+                     fakeFieldName : 'fields',
+                     props: {
+                       label: this.$tr('qad.layout.form.customerFeedback')
+                     }
+                  },
+                  independent_escort: {
+                     name: 'independent_escort',
+                     value: null,
+                     type: 'checkbox',
+                     fakeFieldName : 'fields',
+                     props: {
+                       label: this.$tr('qad.layout.form.independentEscort')
+                     }
+                  },
+                  tags: {
+                     value: [],
+                     type: 'select',
+                     props: {
+                       multiple:true,
+                       label: this.$tr('qad.layout.form.tags'),
+                        options: [],
+                     },
+                     loadOptions: {
+                       apiRoute: 'apiRoutes.qtag.tags',
+                       select: {label: 'name', id: 'id'},
+                       requestParams: {
+                         namespace:"place"
+                       }
+                     }
+                  },
+                  // image1: {
+                  //    name: 'image1',
+                  //    value: null,
+                  //    type: 'image',
+                  //    isFakeField : true,
+                  //    props: {
+                  //       label: this.$tr('ui.form.firstImage')
+                  //    }
+                  // },
                   // mediasSingle: {
                   //    name: 'mediasSingle',
                   //    value: {},

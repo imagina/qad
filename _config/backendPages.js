@@ -30,7 +30,20 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qad.sidebar.admin.ads',
     icon: 'fas fa-store',
-    authenticated: true
+    authenticated: true,
+    subHeader : {
+      refresh : true
+    }
+  },
+  adsEdit:{
+    activated: true,
+    path: '/qad/ads/edit/:id',
+    name: 'qad.admin.ads.edit',
+    page: () => import('@imagina/qad/_layouts/admin/ads/form'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'qad.sidebar.admin.ads',
+    icon: 'fas fa-store',
+    authenticated: true,
   },
 
 }

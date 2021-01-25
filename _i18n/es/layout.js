@@ -11,5 +11,20 @@ export default {
   },
   form:{
     user:"Usuario",
+    age:"Edad",
+    address:"Dirección",
+    phone:"Teléfono",
+    name:"Nombre",
+    note:"Nota",
+    customerFeedback:"Comentarios de clientes",
+    independentEscort:"Escort independiente",
+    services:"Servicios",
+    tags:"Etiquetas",
+    status:"Estado",
+  },
+  options:{
+    pending:"Pendiente",
+    approved:"Aprobado",
+    denied:"Rechazado",
   }
 }

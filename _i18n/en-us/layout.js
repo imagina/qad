@@ -11,6 +11,21 @@ export default {
   },
   form:{
     user:"User",
+    age:"Age",
+    address:"Address",
+    phone:"Phone",
+    name:"Name",
+    note:"Note",
+    customerFeedback:"Customer Feedback",
+    independentEscort:"independent Escort",
+    services:"Services",
+    tags:"Tags",
+    status:"Status",
+  },
+  options:{
+    pending:"Pending",
+    approved:"Approved",
+    denied:"Denied",
   }
 
 }
