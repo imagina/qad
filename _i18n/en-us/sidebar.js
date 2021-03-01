@@ -1,11 +1,7 @@
 export default {
-  admin:{
-    menu:{
-      manageAds:"Manage ads"
-    },
-    services:"Services",
-    categories:"Categories",
-    ads:"Ads",
-  }
-
+  adminGroup: 'Ads',
+  adminAds: 'Ads List',
+  adminAdsCreate: 'Create Ad',
+  adminAdsUpdate: 'Update Ad',
+  adminCategories: 'Ads categories',
 }

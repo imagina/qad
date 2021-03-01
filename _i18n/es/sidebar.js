@@ -1,11 +1,7 @@
 export default {
-  admin:{
-    menu:{
-      manageAds:"Gestionar anuncios"
-    },
-    services:"Servicios",
-    categories:"Categorías",
-    ads:"Anuncios",
-  }
-
+  adminGroup: 'Anuncios',
+  adminAds: 'Lista de Anuncios',
+  adminAdsCreate: 'Crear Anuncio',
+  adminAdsUpdate: 'Actualizar Anuncio',
+  adminCategories: 'Categorias de Anuncios',
 }
