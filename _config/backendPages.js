@@ -32,7 +32,7 @@ export default {
   adsUpdate: {
     permission: 'iad.ads.edit',
     activated: true,
-    path: '/ad/ads/update/:adId',
+    path: '/ad/ads/update/:id',
     name: 'qad.admin.ads.edit',
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
