@@ -93,7 +93,7 @@
           <q-expansion-item icon="fas fa-map-marker-alt" :label="$tr('ui.label.map')" class="box-collapse q-mb-md"
                             header-class="header-container" @after-show="renderMap = true" group="fromAdExpandion">
             <div class="q-pa-md">
-              <dynamic-field :field="formFields.map" v-model="form.options.map" v-if="renderMap"/>
+              <dynamic-field :field="formFields.map" v-model="form.options.map" v-if="renderMap" @input="setLatLng"/>
             </div>
           </q-expansion-item>
         </div>
@@ -145,6 +145,8 @@ export default {
           cityId: null,
           status: '0',
           featured: null,
+          lat: null,
+          lng: null,
         },
         fieldsTranslatable: {
           title: null,
@@ -438,6 +440,8 @@ export default {
               this.form.prices[`price${key}`] = item.value
             })
           }
+          if(response.data.options.map)
+            this.setLatLng()
           resolve(response.data)
         }).catch(error => {
           resolve(false)
@@ -506,6 +510,10 @@ export default {
           }
         ]
       }
+    },
+    setLatLng(){
+      this.locale.form.lat = this.form.options.map.lat
+      this.locale.form.lng = this.form.options.map.lng
     },
     //Toogle select category
     toggleSelectCategory(category) {
