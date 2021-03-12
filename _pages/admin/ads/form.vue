@@ -114,7 +114,11 @@ export default {
   },
   props: {},
   components: {},
-  watch: {},
+  watch: {
+    'locale.formTemplate.title'(value){
+      this.locale.formTemplate.slug = this.$helper.getSlug(value)
+    }
+  },
   mounted() {
     this.$nextTick(function () {
       this.init()
@@ -528,7 +532,7 @@ export default {
 
       //Transform prices
       let pricesData = []
-      let adMinPrice = 99999999999999999999
+      let adMinPrice = 0
       let adMaxPrice = 0
       if (Object.keys(formData.prices || {}).length) {
         for (var i = 0; i < (Object.keys(formData.prices).length / 2); i++) {
@@ -538,7 +542,7 @@ export default {
             //Add to prices date
             pricesData.push({description: formData.prices[`description${i}`], value: itemPrice})
             //Validate if is min price
-            if (itemPrice < adMinPrice) adMinPrice = itemPrice
+            if ((adMinPrice == 0) || (itemPrice < adMinPrice)) adMinPrice = itemPrice
             //Validate if is max price
             if (itemPrice > adMaxPrice) adMaxPrice = itemPrice
           }
