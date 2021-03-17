@@ -4,4 +4,5 @@ export default {
   adminAdsCreate: 'Create Ad',
   adminAdsUpdate: 'Update Ad',
   adminCategories: 'Ads categories',
+  panelAds : 'My Ads'
 }

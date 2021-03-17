@@ -567,7 +567,7 @@ export default {
         this.$crud.create('apiRoutes.qad.ads', this.getformData()).then(response => {
           this.$alert.info({message: `${this.$tr('ui.message.recordCreated')}`})
           this.loading = false
-          this.$router.push({name: 'qad.admin.ads.index'})
+          this.$router.push({name: 'qad.ads.index'})
         }).catch(error => {
           this.$alert.error({message: `${this.$tr('ui.message.recordNoCreated')}`})
           this.loading = false
@@ -581,7 +581,7 @@ export default {
         this.$crud.update('apiRoutes.qad.ads', this.adId, this.getformData()).then(response => {
           this.$alert.info({message: `${this.$tr('ui.message.recordUpdated')}`})
           this.loading = false
-          this.$router.push({name: 'qad.admin.ads.index'})
+          this.$router.push({name: 'qad.ads.index'})
         }).catch(error => {
           this.$alert.error({message: `${this.$tr('ui.message.recordNoUpdated')}`})
           this.loading = false

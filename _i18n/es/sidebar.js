@@ -4,4 +4,5 @@ export default {
   adminAdsCreate: 'Crear Anuncio',
   adminAdsUpdate: 'Actualizar Anuncio',
   adminCategories: 'Categorias de Anuncios',
+  panelAds : 'Mis Anuncios'
 }

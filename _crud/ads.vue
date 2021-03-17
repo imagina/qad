@@ -14,7 +14,7 @@ export default {
         permission: 'iad.ads',
         create: {
           title: this.$tr('qad.layout.create.ad'),
-          to: {name: 'qad.admin.ads.create'}
+          to: {name: 'qad.ads.create'}
         },
         read: {
           columns: [
@@ -55,7 +55,7 @@ export default {
         },
         update: {
           title: this.$tr('qad.layout.edit.ad'),
-          to: 'qad.admin.ads.edit'
+          to: 'qad.ads.edit'
         },
         delete: true,
         formLeft: {
