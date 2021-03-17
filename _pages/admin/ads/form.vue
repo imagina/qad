@@ -93,7 +93,7 @@
           <q-expansion-item icon="fas fa-map-marker-alt" :label="$tr('ui.label.map')" class="box-collapse q-mb-md"
                             header-class="header-container" @after-show="renderMap = true" group="fromAdExpandion">
             <div class="q-pa-md">
-              <dynamic-field :field="formFields.map" v-model="form.options.map" v-if="renderMap"/>
+              <dynamic-field :field="formFields.map" v-model="form.options.map" v-if="renderMap" @input="setLatLng"/>
             </div>
           </q-expansion-item>
         </div>
@@ -114,7 +114,11 @@ export default {
   },
   props: {},
   components: {},
-  watch: {},
+  watch: {
+    'locale.formTemplate.title'(value){
+      this.locale.formTemplate.slug = this.$helper.getSlug(value)
+    }
+  },
   mounted() {
     this.$nextTick(function () {
       this.init()
@@ -145,6 +149,8 @@ export default {
           cityId: null,
           status: '0',
           featured: null,
+          lat: null,
+          lng: null,
         },
         fieldsTranslatable: {
           title: null,
@@ -438,6 +444,8 @@ export default {
               this.form.prices[`price${key}`] = item.value
             })
           }
+          if(response.data.options.map)
+            this.setLatLng()
           resolve(response.data)
         }).catch(error => {
           resolve(false)
@@ -507,6 +515,10 @@ export default {
         ]
       }
     },
+    setLatLng(){
+      this.locale.form.lat = this.form.options.map.lat
+      this.locale.form.lng = this.form.options.map.lng
+    },
     //Toogle select category
     toggleSelectCategory(category) {
       let index = this.form.categories.findIndex(item => item == category.id)//Search item in array
@@ -520,7 +532,7 @@ export default {
 
       //Transform prices
       let pricesData = []
-      let adMinPrice = 99999999999999999999
+      let adMinPrice = 0
       let adMaxPrice = 0
       if (Object.keys(formData.prices || {}).length) {
         for (var i = 0; i < (Object.keys(formData.prices).length / 2); i++) {
@@ -530,7 +542,7 @@ export default {
             //Add to prices date
             pricesData.push({description: formData.prices[`description${i}`], value: itemPrice})
             //Validate if is min price
-            if (itemPrice < adMinPrice) adMinPrice = itemPrice
+            if ((adMinPrice == 0) || (itemPrice < adMinPrice)) adMinPrice = itemPrice
             //Validate if is max price
             if (itemPrice > adMaxPrice) adMaxPrice = itemPrice
           }
