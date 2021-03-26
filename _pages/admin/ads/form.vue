@@ -24,7 +24,8 @@
             <!--Fields-->
             <div v-if="locale.success">
               <dynamic-field v-for="(field, keyField) in formFields.main" :key="keyField" :field="field"
-                             v-model="locale.formTemplate[field.name || keyField]" :language="locale.language"/>
+                             v-model="locale.formTemplate[field.name || keyField]" :language="locale.language"
+                             @input="handlerInputChange((field.name || keyField))"/>
             </div>
           </div>
           <!--Extra Fields-->
@@ -69,7 +70,7 @@
           </q-expansion-item>
           <!--Media-->
           <q-expansion-item icon="fas fa-photo-video" label="Media" class="box-collapse q-mb-md" group="fromAdExpandion"
-                            header-class="header-container" expand-separator default-opened>
+                            header-class="header-container" expand-separator>
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.media" :key="keyField" :field="field"
                              v-model="form[field.name || keyField]" :item-id="adId"/>
@@ -114,11 +115,7 @@ export default {
   },
   props: {},
   components: {},
-  watch: {
-    'locale.formTemplate.title'(value){
-      this.locale.formTemplate.slug = this.$helper.getSlug(value)
-    }
-  },
+  watch: {},
   mounted() {
     this.$nextTick(function () {
       this.init()
@@ -357,7 +354,7 @@ export default {
             }
           },
           gallery: {
-            name : 'mediasMulti',
+            name: 'mediasMulti',
             value: {},
             type: 'media',
             props: {
@@ -365,11 +362,11 @@ export default {
               zone: 'gallery',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              multiple : true
+              multiple: true
             }
           },
           videos: {
-            name : 'mediasMulti',
+            name: 'mediasMulti',
             value: {},
             type: 'media',
             props: {
@@ -377,7 +374,7 @@ export default {
               zone: 'videos',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              multiple : true
+              multiple: true
             }
           }
         },
@@ -444,7 +441,7 @@ export default {
               this.form.prices[`price${key}`] = item.value
             })
           }
-          if(response.data.options.map)
+          if (response.data.options.map)
             this.setLatLng()
           resolve(response.data)
         }).catch(error => {
@@ -508,14 +505,15 @@ export default {
             type: 'input',
             props: {
               label: this.$tr('ui.label.price'),
-              mask: '###.###.###',
-              unmaskedValue: true
+              //mask: '###.###.###',
+              //unmaskedValue: true
             }
           }
         ]
       }
     },
-    setLatLng(){
+    //Set locale language
+    setLatLng() {
       this.locale.form.lat = this.form.options.map.lat
       this.locale.form.lng = this.form.options.map.lng
     },
@@ -525,8 +523,17 @@ export default {
       if (index == -1) this.form.categories.push(category.id)//Add item
       else this.form.categories.splice(index, 1)//Remove item
     },
-    //Get formdata
-    getformData() {
+    //Listen input change
+    handlerInputChange(fieldName) {
+      switch (fieldName) {
+        case 'title':
+          if (!this.adId)
+            this.locale.formTemplate.slug = this.$helper.getSlug(this.locale.formTemplate.title)
+          break
+      }
+    },
+    //Get form data
+    getFormData() {
       let formLocale = this.$clone(this.locale.form)
       let formData = this.$clone(this.form)
 
@@ -556,7 +563,7 @@ export default {
           fieldsData.push({name: itemName, value: formData.fields[itemName]})
       }
 
-      //Repsonse
+      //Response
       return {
         ...formLocale,
         categories: formData.categories,
@@ -576,7 +583,7 @@ export default {
     createItem() {
       return new Promise(resolve => {
         this.loading = true
-        this.$crud.create('apiRoutes.qad.ads', this.getformData()).then(response => {
+        this.$crud.create('apiRoutes.qad.ads', this.getFormData()).then(response => {
           this.$alert.info({message: `${this.$tr('ui.message.recordCreated')}`})
           this.loading = false
           this.$router.push({name: 'qad.ads.index'})
@@ -590,7 +597,7 @@ export default {
     updateItem() {
       return new Promise(resolve => {
         this.loading = true
-        this.$crud.update('apiRoutes.qad.ads', this.adId, this.getformData()).then(response => {
+        this.$crud.update('apiRoutes.qad.ads', this.adId, this.getFormData()).then(response => {
           this.$alert.info({message: `${this.$tr('ui.message.recordUpdated')}`})
           this.loading = false
           this.$router.push({name: 'qad.ads.index'})
