@@ -185,12 +185,10 @@ export default {
           },
           description: {
             value: '',
-            type: 'input',
+            type: 'html',
             isTranslatable: true,
             props: {
               label: `${this.$tr('ui.form.description')}*`,
-              type: 'textarea',
-              rows: "3",
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ],
