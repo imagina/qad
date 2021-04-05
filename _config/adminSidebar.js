@@ -8,6 +8,7 @@ export default [
     children: [
       pages.qad.ads,
       pages.qad.categories,
+      pages.qad.ups,
     ]
   }
 ]

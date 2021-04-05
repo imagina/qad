@@ -9,4 +9,5 @@ export default {
   ads: `${urlBase}/pins`,
   adStatus: `${urlBase}/pins/status`,
   categories: `${urlBase}/categories`,
+  ups: `${urlBase}/ups`,
 }

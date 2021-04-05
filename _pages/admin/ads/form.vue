@@ -5,7 +5,7 @@
       <!--Form-->
       <div class="row q-col-gutter-md">
         <!--Main Fields-->
-        <q-form autocorrect="off" autocomplete="off" ref="formAd" class="col-12 col-md-7"
+        <q-form autocorrect="off" autocomplete="off" ref="formAd" class="col-12 col-lg-7 offset-lg-1"
                 @submit="adId ? updateItem() : createItem()"
                 @validation-error="$alert.error($tr('ui.message.formInvalid'))">
           <!--Language-->
@@ -17,7 +17,7 @@
             <!--Title-->
             <div class="text-blue-grey text-weight-bold text-subtitle1 row items-center">
               <q-icon name="fas fa-bullhorn" class="q-mr-sm"/>
-              {{ $tr('ui.label.ad') }}
+              {{ $trp('qad.layout.form.newAd') }}
               <label v-if="adId" class="q-ml-sm">#{{ adId }}</label>
             </div>
             <q-separator class="q-mt-sm q-mb-md"/>
@@ -33,12 +33,19 @@
             <dynamic-field v-for="(field, keyField) in extraFields" :key="keyField" :field="field"
                            v-model="form[field.fakeFieldName || 'options'][field.name || keyField]"/>
           </div>
-        </q-form>
-        <!--Related Fields-->
-        <div class="col-12 col-md-5">
+          <!--Locations-->
+          <q-expansion-item icon="fas fa-map-marker-alt" :label="$trp('qad.layout.form.whereLocation')"
+                            class="box-collapse q-mb-md"
+                            header-class="header-container" group="fromAdExpansion">
+            <div class="q-pa-md">
+              <dynamic-field v-for="(field, keyField) in formFields.location" :key="keyField" :field="field"
+                             v-model="form.options[field.name || keyField]"/>
+            </div>
+          </q-expansion-item>
           <!--Categories-->
-          <q-expansion-item icon="fas fa-layer-group" :label="$trp('ui.form.category')" class="box-collapse q-mb-md"
-                            header-class="header-container" group="fromAdExpandion">
+          <q-expansion-item icon="fas fa-layer-group" :label="$trp('qad.layout.form.aboutAd')"
+                            class="box-collapse q-mb-md"
+                            header-class="header-container" group="fromAdExpansion">
             <!--Category block-->
             <div v-for="(category, keyCategory) in categories" class="category-content">
               <!--Title-->
@@ -55,30 +62,34 @@
             </div>
           </q-expansion-item>
           <!--Schedule-->
-          <q-expansion-item icon="fas fa-clock" :label="$tr('ui.form.schedule')" class="box-collapse q-mb-md"
-                            header-class="header-container" expand-separator group="fromAdExpandion">
+          <q-expansion-item icon="fas fa-clock" :label="$trp('qad.layout.form.availableSchedule')"
+                            class="box-collapse q-mb-md"
+                            header-class="header-container" expand-separator group="fromAdExpansion">
             <dynamic-field :field="formFields.schedule" v-model="form.options.schedule"
                            @converted="value => form.schedule = value"/>
           </q-expansion-item>
           <!--Contact-->
-          <q-expansion-item icon="fas fa-address-book" :label="$tr('ui.label.contact')" class="box-collapse q-mb-md"
-                            header-class="header-container" expand-separator group="fromAdExpandion">
+          <q-expansion-item icon="fas fa-address-book" :label="$trp('qad.layout.form.howContact')"
+                            class="box-collapse q-mb-md"
+                            header-class="header-container" expand-separator group="fromAdExpansion">
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.contact" :key="keyField" :field="field"
                              v-model="form.options[field.name || keyField]"/>
             </div>
           </q-expansion-item>
           <!--Media-->
-          <q-expansion-item icon="fas fa-photo-video" label="Media" class="box-collapse q-mb-md" group="fromAdExpandion"
-                            header-class="header-container" expand-separator>
+          <q-expansion-item icon="fas fa-photo-video" class="box-collapse q-mb-md" group="fromAdExpansion"
+                            header-class="header-container" expand-separator
+                            :label="$trp('qad.layout.form.photosAndVideo')">
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.media" :key="keyField" :field="field"
                              v-model="form[field.name || keyField]" :item-id="adId"/>
             </div>
           </q-expansion-item>
           <!--Prices-->
-          <q-expansion-item icon="fas fa-hand-holding-usd" :label="$trp('ui.label.price')" class="box-collapse q-mb-md"
-                            header-class="header-container" expand-separator group="fromAdExpandion">
+          <q-expansion-item icon="fas fa-hand-holding-usd" :label="$trp('qad.layout.form.rates')"
+                            class="box-collapse q-mb-md"
+                            header-class="header-container" expand-separator group="fromAdExpansion">
             <div class="q-pa-md row q-col-gutter-x-sm">
               <!--Fields-->
               <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-6"
@@ -90,13 +101,30 @@
               </div>
             </div>
           </q-expansion-item>
-          <!--Map-->
-          <q-expansion-item icon="fas fa-map-marker-alt" :label="$tr('ui.label.map')" class="box-collapse q-mb-md"
-                            header-class="header-container" @after-show="renderMap = true" group="fromAdExpandion">
-            <div class="q-pa-md">
-              <dynamic-field :field="formFields.map" v-model="form.options.map" v-if="renderMap" @input="setLatLng"/>
+        </q-form>
+        <!--Recommendations-->
+        <div class="col-3 offset-1 q-hide q-md-show">
+          <div class="box">
+            <div class="box-title text-teal">
+              <q-icon name="fas fa-hat-wizard"/>
+              Recomendaciones...
             </div>
-          </q-expansion-item>
+            <q-separator class="q-my-sm"/>
+            <!--Items-->
+            <q-list>
+              <q-item class="q-px-none q-py-md" v-for="item in 7" :key="item">
+                <q-item-section avatar>
+                  <q-avatar size="40px" font-size="17px" color="teal" text-color="white" icon="fas fa-magic"/>
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-subtitle2">Single line item</q-item-label>
+                  <q-item-label caption lines="2">
+                    Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
         </div>
         <!--Action-->
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -185,13 +213,16 @@ export default {
           },
           description: {
             value: '',
-            type: 'html',
+            type: 'input',
             isTranslatable: true,
             props: {
               label: `${this.$tr('ui.form.description')}*`,
+              type: 'textarea',
+              rows: "5",
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ],
+
             },
           },
           userId: {
@@ -209,6 +240,31 @@ export default {
               select: {label: 'fullName', id: 'id'}
             }
           },
+          status: {
+            value: '1',
+            type: 'select',
+            props: {
+              label: `${this.$tr('ui.form.status')}*`,
+              rules: [
+                val => !!val || this.$tr('ui.message.fieldRequired')
+              ],
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qad.adStatus',
+              select: {label: 'name', id: 'id'}
+            }
+          },
+          featured: {
+            value: 0,
+            type: 'checkbox',
+            props: {
+              label: `${this.$tr('ui.label.featured')}`,
+              trueValue: 1,
+              falseValue: 0,
+            }
+          },
+        },
+        location: {
           countryId: {
             value: null,
             type: 'select',
@@ -255,29 +311,13 @@ export default {
               requestParams: {filter: {province_id: this.locale.form.provinceId}}
             }
           },
-          status: {
-            value: '1',
-            type: 'select',
+          map: {
+            value: null,
+            type: 'positionMarkerMap',
             props: {
-              label: `${this.$tr('ui.form.status')}*`,
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ],
-            },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qad.adStatus',
-              select: {label: 'name', id: 'id'}
+              label: `${this.$tr('ui.label.search')}...`
             }
-          },
-          featured: {
-            value: 0,
-            type: 'checkbox',
-            props: {
-              label: `${this.$tr('ui.label.featured')}`,
-              trueValue: 1,
-              falseValue: 0,
-            }
-          },
+          }
         },
         schedule: {
           value: null,
@@ -503,8 +543,8 @@ export default {
             type: 'input',
             props: {
               label: this.$tr('ui.label.price'),
-              //mask: '###.###.###',
-              //unmaskedValue: true
+              type: 'number',
+              rules: [val => !val || (val >= 10) || this.$tr('ui.message.fieldMinValue', {num: 10})]
             }
           }
         ]

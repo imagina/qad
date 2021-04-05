@@ -56,7 +56,24 @@ export default {
     icon: 'fas fa-layer-group',
     authenticated: true,
     subHeader: {
-      refresh: true
+      refresh: true,
+      breadcrumb : ['qad.ads']
+    }
+  },
+  ups: {
+    permission: 'iad.ups.manage',
+    activated: true,
+    path: '/ad/ups/index',
+    name: 'qad.ups.index',
+    crud: import('@imagina/qad/_crud/ups'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'qad.sidebar.adminUps',
+    icon: 'fas fa-arrow-alt-circle-up',
+    authenticated: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb : ['qad.ads']
     }
   }
 }
