@@ -101,30 +101,60 @@
               </div>
             </div>
           </q-expansion-item>
+          <!--Ups-->
+          <q-expansion-item icon="fas fa-rocket" :label="$trp('qad.layout.form.adUps')"
+                            class="box-collapse q-mb-md" v-if="adInfo"
+                            header-class="header-container" expand-separator group="fromAdExpansion">
+            <div class="q-pa-md row q-col-gutter-x-sm">
+              <!--Ups info-->
+              <div class="col-12" v-if="adUps && adUps.length">
+                <!--Title-->
+                <div class="text-blue-grey text-weight-bold text-center">
+                  {{ $tr('qad.layout.message.automaticUploads') }}
+                </div>
+                <!--Ups-->
+                <q-list separator class="q-py-sm q-mb-md">
+                  <q-item v-for="(up, upKey) in adUps" :key="upKey">
+                    <q-item-section>
+                      <!--Ups-->
+                      <q-item-label>
+                        <q-icon name="fas fa-arrow-alt-circle-up" class="q-mr-sm" color="blue-grey"/>
+                        <label class="text-caption text-blue-grey">{{ $tr('qad.layout.form.upsDaily') }}</label>
+                        {{ up.upsCounter }}/{{ up.upsDaily }},
+                        <label class="text-caption text-blue-grey">{{ $tr('qad.layout.form.daysLimit') }}</label>
+                        {{ up.daysCounter }}/{{ up.daysLimit }}
+                      </q-item-label>
+                      <!--Time-->
+                      <q-item-label>
+                        <q-icon name="fas fa-clock" class="q-mr-sm" color="blue-grey"/>
+                        <label class="text-caption text-blue-grey">{{ $tr('ui.label.since') }}</label>
+                        {{ $trd(`${up.fromDate} ${up.fromHour}`, {type: 'time'}) }}
+                        <label class="text-caption text-blue-grey">{{ $tr('ui.label.until') }}</label>
+                        {{ $trd(`${up.toDate} ${up.toHour}`, {type: 'time'}) }}
+                      </q-item-label>
+                      <!--Date-->
+                      <q-item-label>
+                        <q-icon name="fas fa-calendar" class="q-mr-sm" color="blue-grey"/>
+                        <label class="text-caption text-blue-grey">{{ $tr('ui.label.since') }}</label>
+                        {{ $trd(up.fromDate) }}
+                        <label class="text-caption text-blue-grey">{{ $tr('ui.label.until') }}</label>
+                        {{ $trd(up.toDate) }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <!--Actions-->
+              <div class=" col-12 text-right">
+                <q-btn :label="$tr('ui.label.boost')" color="green" rounded unelevated size="10px" icon="fas fa-rocket"
+                       @click="$helper.openExternalURL(`${$store.state.qsiteApp.baseUrl}/pins/${adInfo.slug}/buy-up`, true)"/>
+              </div>
+            </div>
+          </q-expansion-item>
         </q-form>
         <!--Recommendations-->
         <div class="col-3 offset-1 q-hide q-md-show">
-          <div class="box">
-            <div class="box-title text-teal">
-              <q-icon name="fas fa-hat-wizard"/>
-              Recomendaciones...
-            </div>
-            <q-separator class="q-my-sm"/>
-            <!--Items-->
-            <q-list>
-              <q-item class="q-px-none q-py-md" v-for="item in 7" :key="item">
-                <q-item-section avatar>
-                  <q-avatar size="40px" font-size="17px" color="teal" text-color="white" icon="fas fa-magic"/>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label class="text-subtitle2">Single line item</q-item-label>
-                  <q-item-label caption lines="2">
-                    Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </div>
+          <recommendations :setting-name="'iad::recommendationsAdForm'"/>
         </div>
         <!--Action-->
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -153,6 +183,7 @@ export default {
     return {
       pageId: this.$uid(),
       adId: this.$route.params.id,
+      adInfo: false,
       loading: false,
       renderMap: false,
       categories: [],
@@ -186,6 +217,7 @@ export default {
     }
   },
   computed: {
+    //Form fields
     formFields() {
       return {
         main: {
@@ -206,6 +238,7 @@ export default {
             isTranslatable: true,
             props: {
               label: `${this.$tr('ui.form.slug')}*`,
+              vIf: (config('app.mode') == 'iadmin') ? true : false,
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ],
@@ -231,6 +264,7 @@ export default {
             props: {
               label: `${this.$tr('ui.label.user')}*`,
               readonly: true,
+              vIf: (config('app.mode') == 'iadmin') ? true : false,
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ],
@@ -245,6 +279,7 @@ export default {
             type: 'select',
             props: {
               label: `${this.$tr('ui.form.status')}*`,
+              vIf: (config('app.mode') == 'iadmin') ? true : false,
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ],
@@ -259,6 +294,7 @@ export default {
             type: 'checkbox',
             props: {
               label: `${this.$tr('ui.label.featured')}`,
+              vIf: (config('app.mode') == 'iadmin') ? true : false,
               trueValue: 1,
               falseValue: 0,
             }
@@ -424,6 +460,17 @@ export default {
           }
         },
       }
+    },
+    //Ups data
+    adUps() {
+      //Default response
+      let response = []
+      //Parse ad ups
+      this.adInfo.adUps.forEach(up => {
+        if (up.status) response.push(up)
+      })
+      //Response
+      return response
     }
   },
   methods: {
@@ -458,14 +505,15 @@ export default {
         let requestParams = {
           refresh: true,
           params: {
-            include: 'fields,categories',
+            include: 'fields,categories,adUps',
             filter: {allTranslations: true}
           }
         }
         //Request
         this.$crud.show('apiRoutes.qad.ads', this.adId, requestParams).then(response => {
           this.locale.form = response.data//Set locale data
-          //console.warn(response.data)
+          //Save ad info
+          this.adInfo = response.data
           //Set fields data
           if (response.data.fields) response.data.fields.map((item, key) => this.form.fields[item.name] = item.value)
           //Set options fields
@@ -490,7 +538,7 @@ export default {
     //Get Categories
     getCategories(refresh = false) {
       return new Promise((resolve, reject) => {
-        //Requets params
+        //Request params
         let requestParams = {
           refresh: refresh
         }
@@ -555,7 +603,7 @@ export default {
       this.locale.form.lat = this.form.options.map.lat
       this.locale.form.lng = this.form.options.map.lng
     },
-    //Toogle select category
+    //Toggle select category
     toggleSelectCategory(category) {
       let index = this.form.categories.findIndex(item => item == category.id)//Search item in array
       if (index == -1) this.form.categories.push(category.id)//Add item

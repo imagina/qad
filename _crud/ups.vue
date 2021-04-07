@@ -22,11 +22,12 @@ export default {
           columns: [
             {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
             {name: 'title', label: this.$tr('ui.form.title'), field: 'title', align: 'rigth'},
-            {name: 'slug', label: this.$tr('ui.form.slug'), field: 'slug', align: 'left'},
+            {name: 'days_limit', label: this.$tr('qad.layout.form.daysLimit'), field: 'daysLimit', align: 'left'},
+            {name: 'ups_daily', label: this.$tr('qad.layout.form.upsDaily'), field: 'upsDaily', align: 'left'},
             {name: 'status', label: this.$tr('ui.form.status'), field: 'status'},
             {
-              name: 'parent', label: this.$tr('ui.form.parent'), field: 'parent', align: 'left',
-              format: val => val ? (val.title ? val.title : '-') : '-'
+              name: 'product_id', label: this.$tr('ui.label.product'), field: 'product', align: 'left',
+              format: val => val ? val.name : '-',
             },
             {
               name: 'created_at', label: this.$tr('ui.form.createdAt'), field: 'createdAt', align: 'left',

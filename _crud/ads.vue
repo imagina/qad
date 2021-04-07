@@ -25,10 +25,10 @@ export default {
               name: 'user', label: this.$tr('qad.layout.form.user'), field: 'user', align: 'left',
               format: val => (val && val.fullName) ? val.fullName : ''
             },
-            {name: 'statusName', label: this.$tr('ui.form.status'), field: 'statusName', align : 'left'},
+            {name: 'statusName', label: this.$tr('ui.form.status'), field: 'statusName', align: 'left'},
             {
-              name: 'featured', label: this.$tr('ui.label.featured'), field: 'featured', align : 'left',
-              format : val => val ? this.$tr('ui.label.yes') : this.$tr('ui.label.no')
+              name: 'featured', label: this.$tr('ui.label.featured'), field: 'featured', align: 'left',
+              format: val => val ? this.$tr('ui.label.yes') : this.$tr('ui.label.no')
             },
             {
               name: 'category', label: this.$trp('ui.label.category'), field: 'categories',
@@ -51,7 +51,17 @@ export default {
             include: 'categories,user',
             filter: {allTranslations: true}
           },
-          filters: {}
+          filters: {},
+          actions: [
+            {
+              icon: 'fas fa-rocket',
+              tooltip: this.$tr('ui.label.boost'),
+              color: 'blue',
+              action: (item) => {
+                this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/pins/${item.slug}/buy-up`, true)
+              }
+            }
+          ]
         },
         update: {
           title: this.$tr('qad.layout.edit.ad'),

@@ -11,6 +11,9 @@ export default {
     ad: "Edit ad",
     up : 'Update Up'
   },
+  message: {
+    automaticUploads: '¡Automatic Uploads!',
+  },
   form: {
     user: "User",
     age: "Age",
@@ -32,6 +35,7 @@ export default {
     rates : 'Rates',
     daysLimit : 'Limit Of Days',
     upsDaily : 'Ups Daily',
+    adUps : 'How boost your AD?'
   },
   options: {
     pending: "Pending",
