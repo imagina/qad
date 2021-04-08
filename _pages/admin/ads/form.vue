@@ -39,7 +39,7 @@
                             header-class="header-container" group="fromAdExpansion">
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.location" :key="keyField" :field="field"
-                             v-model="form.options[field.name || keyField]"/>
+                             v-model="locale.formTemplate[field.name || keyField]"/>
             </div>
           </q-expansion-item>
           <!--Categories-->
