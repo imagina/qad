@@ -557,10 +557,10 @@ export default {
         //Request params
         let requestParams = {
           refresh: refresh,
-          params: {filter: {configFieldName: 'crud-fields.Iad.ads'}}
+          params: {filter: {configName: 'Iad.crud-fields.ads'}}
         }
         //Request
-        this.$crud.index('apiRoutes.qsite.configFields', requestParams).then(response => {
+        this.$crud.index('apiRoutes.qsite.configs', requestParams).then(response => {
           if (response.data) this.extraFields = response.data
           //Set fake fields
           Object.values(response.data).forEach(field => {
