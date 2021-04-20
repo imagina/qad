@@ -203,7 +203,7 @@ export default {
           countryId: null,
           provinceId: null,
           cityId: null,
-          status: '0',
+          status: '2',
           featured: null,
           lat: null,
           lng: null,
@@ -275,7 +275,7 @@ export default {
             }
           },
           status: {
-            value: '1',
+            value: '2',
             type: 'select',
             props: {
               label: `${this.$tr('ui.form.status')}*`,
