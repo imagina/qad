@@ -475,7 +475,13 @@ export default {
   },
   methods: {
     async init() {
-      await this.getData()//Get data
+      await Promise.all([
+        this.getData(),//Get data
+        this.$hook.dispatchEvent(
+          (this.adId ? 'isUpdating' : 'isCreating'),
+          {entityName: config('main.qad.entityNames.ad')}
+        )
+      ])
       //Set first price inputs
       let pricesValues = Object.keys(this.form.prices).length
       this.setPricesFields(pricesValues ? (pricesValues / 2) : 1)
@@ -671,6 +677,7 @@ export default {
         this.loading = true
         this.$crud.create('apiRoutes.qad.ads', this.getFormData()).then(response => {
           this.$alert.info({message: `${this.$tr('ui.message.recordCreated')}`})
+          this.$hook.dispatchEvent('wasCreated', {entityName: config('main.qad.entityNames.ad')})
           this.loading = false
           this.$router.push({name: 'qad.ads.index'})
         }).catch(error => {
@@ -685,6 +692,7 @@ export default {
         this.loading = true
         this.$crud.update('apiRoutes.qad.ads', this.adId, this.getFormData()).then(response => {
           this.$alert.info({message: `${this.$tr('ui.message.recordUpdated')}`})
+          this.$hook.dispatchEvent('wasUpdated', {entityName: config('main.qad.entityNames.ad')})
           this.loading = false
           this.$router.push({name: 'qad.ads.index'})
         }).catch(error => {

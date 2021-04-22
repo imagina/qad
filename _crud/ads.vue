@@ -10,6 +10,7 @@ export default {
     crudData() {
       return {
         crudId: this.crudId,
+        entityName: 'ad',
         apiRoute: 'apiRoutes.qad.ads',
         permission: 'iad.ads',
         create: {
