@@ -13,6 +13,7 @@ export default {
     crudData() {
       return {
         crudId: this.crudId,
+        entityName: config("main.qad.entityNames.category"),
         apiRoute: 'apiRoutes.qad.categories',
         permission: 'iad.categories',
         create: {
