@@ -9,6 +9,7 @@ export default [
       pages.qad.ads,
       pages.qad.categories,
       pages.qad.ups,
+      pages.qad.adUps,
     ]
   }
 ]

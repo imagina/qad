@@ -16,6 +16,7 @@ export default {
   },
   form: {
     user: "Usuario",
+    ad: "Anuncio",
     age: "Edad",
     address: "Dirección",
     phone: "Teléfono",
@@ -35,7 +36,15 @@ export default {
     rates: 'Tarifas para tu anuncio',
     daysLimit: 'Limite De Dias',
     upsDaily: 'Subidas Diarias',
-    adUps: '¿Cómo quieres impulsar tu anuncio?'
+    adUps: '¿Cómo quieres impulsar tu anuncio?',
+    daysCounter: 'Contador (Dias)',
+    upsCounter: 'Contador (Subidas)',
+    fromDate: 'Fecha de Inicio',
+    toDate: 'Fecha Fin',
+    fromHour: 'Hora de Inicio',
+    toHour: 'Hora Fin',
+    nextUpAt: 'Fecha Siguiente Subida',
+    rangeMinutes: 'Sube cada (Minutos)'
   },
   options: {
     pending: "Pendiente",

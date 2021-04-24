@@ -75,5 +75,21 @@ export default {
       refresh: true,
       breadcrumb : ['qad.ads']
     }
+  },
+  adUps: {
+    permission: 'iad.ups.manage',
+    activated: true,
+    path: '/ad/ad-ups/index',
+    name: 'qad.adUps.index',
+    crud: import('@imagina/qad/_crud/adUps'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'qad.sidebar.adminAdUps',
+    icon: 'fas fa-chart-line',
+    authenticated: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb : ['qad.ads']
+    }
   }
 }

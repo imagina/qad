@@ -5,5 +5,6 @@ export default {
   adminAdsUpdate: 'Update Ad',
   adminCategories: 'Ads categories',
   adminUps: 'Ads Ups',
+  adminAdUps: 'Ups Log',
   panelAds : 'My Ads'
 }

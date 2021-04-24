@@ -3,19 +3,20 @@ export default {
     category: "Create category",
     service: "Create service",
     ad: "Create ad",
-    up : 'New Up'
+    up: 'New Up'
   },
   edit: {
     category: "Edit category",
     service: "Edit service",
     ad: "Edit ad",
-    up : 'Update Up'
+    up: 'Update Up'
   },
   message: {
     automaticUploads: '¡Automatic Uploads!',
   },
   form: {
     user: "User",
+    ad: "Ad",
     age: "Age",
     address: "Address",
     phone: "Phone",
@@ -27,15 +28,23 @@ export default {
     tags: "Tags",
     status: "Status",
     photosAndVideo: 'Photos and Videos',
-    yourLocation : 'Your Location',
-    aboutAd : 'About Your AD',
-    newAd : 'New Ad!',
-    howContact : 'How can contact you?',
-    availableSchedule : 'Available time',
-    rates : 'Rates',
-    daysLimit : 'Limit Of Days',
-    upsDaily : 'Ups Daily',
-    adUps : 'How boost your AD?'
+    yourLocation: 'Your Location',
+    aboutAd: 'About Your AD',
+    newAd: 'New Ad!',
+    howContact: 'How can contact you?',
+    availableSchedule: 'Available time',
+    rates: 'Rates',
+    daysLimit: 'Limit Of Days',
+    upsDaily: 'Ups Daily',
+    adUps: 'How boost your AD?',
+    daysCounter: 'Days Counter',
+    upsCounter: 'Upd Counter',
+    fromDate: 'From Date',
+    toDate: 'To Date',
+    fromHour: 'From Hour',
+    toHour: 'To Hour',
+    nextUpAt: 'Next Up At',
+    rangeMinutes : 'Go Up Every (Minutes)'
   },
   options: {
     pending: "Pending",
