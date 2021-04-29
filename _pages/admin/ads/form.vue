@@ -204,6 +204,7 @@ export default {
           provinceId: null,
           cityId: null,
           status: '2',
+          checked: null,
           featured: null,
           lat: null,
           lng: null,
@@ -297,6 +298,16 @@ export default {
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               trueValue: 1,
               falseValue: 0,
+            }
+          },
+          checked: {
+            value: '0',
+            type: 'checkbox',
+            props: {
+              label: `${this.$tr('qad.sidebar.checked')}`,
+              vIf: (config('app.mode') == 'iadmin') ? true : false,
+              trueValue: '1',
+              falseValue: '0',
             }
           },
         },

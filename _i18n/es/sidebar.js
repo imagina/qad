@@ -6,5 +6,6 @@ export default {
   adminCategories: 'Categorias de Anuncios',
   adminUps: 'Subidas de Anuncios',
   adminAdUps: 'Registro de Subidas',
-  panelAds : 'Mis Anuncios'
+  panelAds: 'Mis Anuncios',
+  checked: 'Verificado'
 }

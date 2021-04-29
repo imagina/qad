@@ -6,5 +6,6 @@ export default {
   adminCategories: 'Ads categories',
   adminUps: 'Ads Ups',
   adminAdUps: 'Ups Log',
-  panelAds : 'My Ads'
+  panelAds : 'My Ads',
+  checked: 'Checked'
 }
