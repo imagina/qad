@@ -5,7 +5,7 @@
       <!--Form-->
       <div class="row q-col-gutter-md">
         <!--Main Fields-->
-        <q-form autocorrect="off" autocomplete="off" ref="formAd" class="col-12 col-lg-7 offset-lg-1"
+        <q-form autocorrect="off" autocomplete="off" ref="formAd" class="col-12 col-lg-8 offset-lg-2"
                 @submit="adId ? updateItem() : createItem()"
                 @validation-error="$alert.error($tr('ui.message.formInvalid'))">
           <!--Language-->
@@ -152,10 +152,6 @@
             </div>
           </q-expansion-item>
         </q-form>
-        <!--Recommendations-->
-        <div class="col-3 offset-1 q-hide q-md-show">
-          <recommendations :setting-name="'iad::recommendationsAdForm'"/>
-        </div>
         <!--Action-->
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
           <q-btn :label="$tr('ui.label.save')" color="green" unelevated rounded @click="$refs.formAd.submit()"/>

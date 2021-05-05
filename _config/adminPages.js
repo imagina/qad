@@ -26,7 +26,10 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb: ['qad.ads'],
+      recomendations: {
+        name: 'addForm'
+      }
     }
   },
   adsUpdate: {
@@ -41,7 +44,10 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb: ['qad.ads'],
+      recomendations: {
+        name: 'addForm'
+      }
     }
   },
   categories: {
@@ -57,7 +63,7 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb: ['qad.ads']
     }
   },
   ups: {
@@ -73,7 +79,7 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb: ['qad.ads']
     }
   },
   adUps: {
@@ -89,7 +95,7 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb: ['qad.ads']
     }
   }
 }
