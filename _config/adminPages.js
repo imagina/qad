@@ -27,7 +27,7 @@ export default {
     subHeader: {
       refresh: true,
       breadcrumb: ['qad.ads'],
-      recomendations: {
+      recommendations: {
         name: 'addForm'
       }
     }
@@ -45,7 +45,7 @@ export default {
     subHeader: {
       refresh: true,
       breadcrumb: ['qad.ads'],
-      recomendations: {
+      recommendations: {
         name: 'addForm'
       }
     }
