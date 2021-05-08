@@ -59,12 +59,20 @@ export default {
           filters: {},
           actions: [
             {
+              icon: 'fas fa-eye',
+              color: 'info',
+              tooltip: this.$tr('ui.label.view'),
+              action: (item) => {
+                this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/anuncios/${item.slug}`, true)
+              },
+            },
+            {
               icon: 'fas fa-rocket',
               tooltip: this.$tr('ui.label.boost'),
               color: 'blue',
               action: (item) => {
                 this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/pins/${item.slug}/buy-up`, true)
-              }
+              },
             }
           ]
         },
