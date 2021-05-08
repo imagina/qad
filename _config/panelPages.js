@@ -26,7 +26,10 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb : ['qad.ads'],
+      recommendations: {
+        name: 'addForm'
+      }
     }
   },
   adsUpdate: {
@@ -41,7 +44,10 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb : ['qad.ads']
+      breadcrumb : ['qad.ads'],
+      recommendations: {
+        name: 'addForm'
+      }
     }
   }
 }
