@@ -28,7 +28,7 @@ export default {
     tags: "Tags",
     status: "Status",
     photosAndVideo: 'Photos and Videos',
-    yourLocation: 'Your Location',
+    whereLocation: 'Your Location',
     aboutAd: 'About Your AD',
     newAd: 'New Ad!',
     howContact: 'How can contact you?',
