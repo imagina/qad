@@ -13,6 +13,7 @@ export default {
         entityName: config("main.qad.entityNames.ad"),
         apiRoute: 'apiRoutes.qad.ads',
         permission: 'iad.ads',
+        extraFormFields: 'iad.crud-fields.ads',
         create: {
           title: this.$tr('qad.layout.create.ad'),
           to: {name: 'qad.ads.create'}

@@ -16,6 +16,7 @@ export default {
         entityName: config("main.qad.entityNames.category"),
         apiRoute: 'apiRoutes.qad.categories',
         permission: 'iad.categories',
+        extraFormFields: 'iad.crud-fields.category',
         create: {
           title: this.$tr('qblog.layout.newCategory'),
         },

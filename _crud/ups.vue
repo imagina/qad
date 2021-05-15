@@ -16,6 +16,7 @@ export default {
         entityName: config("main.qad.entityNames.up"),
         apiRoute: 'apiRoutes.qad.ups',
         permission: 'iad.ups',
+        extraFormFields: 'iad.crud-fields.up',
         create: {
           title: this.$tr('qad.layout.create.up'),
         },

@@ -13,6 +13,7 @@ export default {
         entityName: config("main.qad.entityNames.ad"),
         apiRoute: 'apiRoutes.qad.adUps',
         permission: 'iad.ups',
+        extraFormFields: 'iad.crud-fields.ad',
         create: false,
         read: {
           columns: [
