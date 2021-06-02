@@ -657,7 +657,7 @@ export default {
 
       //Transform fields
       let fieldsData = []
-      if (Object.keys(formData.fields).length) {
+      if (Object.keys(formData.fields || {}).length) {
         for (var itemName in formData.fields)
           fieldsData.push({name: itemName, value: formData.fields[itemName]})
       }
