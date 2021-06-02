@@ -35,7 +35,7 @@
           </div>
           <!--Locations-->
           <q-expansion-item icon="fas fa-map-marker-alt" :label="$trp('qad.layout.form.whereLocation')"
-                            class="box-collapse q-mb-md"
+                            class="box-collapse q-mb-md" default-opened
                             header-class="header-container" group="fromAdExpansion">
             <div class="q-pa-md" v-if="locale.success">
               <dynamic-field v-for="(field, keyField) in formFields.location" :key="keyField" :field="field"
