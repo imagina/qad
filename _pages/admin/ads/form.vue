@@ -204,6 +204,7 @@ export default {
           featured: null,
           lat: null,
           lng: null,
+          map: null
         },
         fieldsTranslatable: {
           title: null,
@@ -485,8 +486,8 @@ export default {
       await Promise.all([
         this.getData(),//Get data
         this.$hook.dispatchEvent(
-          (this.adId ? 'isUpdating' : 'isCreating'),
-          {entityName: config('main.qad.entityNames.ad')}
+            (this.adId ? 'isUpdating' : 'isCreating'),
+            {entityName: config('main.qad.entityNames.ad')}
         )
       ])
       //Set first price inputs
@@ -540,8 +541,11 @@ export default {
               this.form.prices[`price${key}`] = item.value
             })
           }
-          if (response.data.options.map)
-            this.setLatLng()
+          if (response.data.options.map) {
+            this.locale.form.map = this.form.options.map
+            this.locale.form.lat = this.form.options.map.lat
+            this.locale.form.lng = this.form.options.map.lng
+          }
           resolve(response.data)
         }).catch(error => {
           resolve(false)
@@ -611,11 +615,6 @@ export default {
         ]
       }
     },
-    //Set locale language
-    setLatLng() {
-      this.locale.form.lat = this.form.options.map.lat
-      this.locale.form.lng = this.form.options.map.lng
-    },
     //Toggle select category
     toggleSelectCategory(category) {
       let index = this.form.categories.findIndex(item => item == category.id)//Search item in array
@@ -668,7 +667,8 @@ export default {
         categories: formData.categories,
         options: {
           ...formData.options,
-          prices: pricesData
+          prices: pricesData,
+          map: formLocale.map
         },
         minPrice: adMinPrice,
         maxPrice: adMaxPrice,
