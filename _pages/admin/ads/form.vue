@@ -8,8 +8,12 @@
         <q-form autocorrect="off" autocomplete="off" ref="formAd" class="col-12 col-lg-8 offset-lg-2"
                 @submit="adId ? updateItem() : createItem()"
                 @validation-error="$alert.error($tr('ui.message.formInvalid'))">
+          <!--Page Actions-->
+          <div class="box box-auto-height q-mb-md">
+            <page-actions :title="$tr($route.meta.title)"/>
+          </div>
           <!--Language-->
-          <div v-show="locale.fieldsTranslatable && Object.keys(locale.fieldsTranslatable).length">
+          <div v-show="locale.fieldsTranslatable && Object.keys(locale.fieldsTranslatable).length" class="q-mb-md">
             <locales v-model="locale" ref="localeComponent" :form="$refs.formContent"/>
           </div>
           <!--Main Fields-->
