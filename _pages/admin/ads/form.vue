@@ -69,8 +69,11 @@
           <q-expansion-item icon="fas fa-clock" :label="$trp('qad.layout.form.availableSchedule')"
                             class="box-collapse q-mb-md"
                             header-class="header-container" expand-separator group="fromAdExpansion">
-            <dynamic-field :field="formFields.schedule" v-model="form.options.schedule"
-                           @converted="value => form.schedule = value"/>
+            <div class="q-pa-md">
+              <dynamic-field v-for="(field, keyField) in formFields.schedule" :key="keyField"
+                             :field="field" v-model="form.options[field.name || keyField]"
+                             @converted="value => form.schedule = value"/>
+            </div>
           </q-expansion-item>
           <!--Contact-->
           <q-expansion-item icon="fas fa-address-book" :label="$trp('qad.layout.form.howContact')"
@@ -368,10 +371,20 @@ export default {
           }
         },
         schedule: {
-          value: null,
-          type: 'schedule',
-          props: {
-            //label: `${this.$tr('ui.label.schedules')}`,
+          statusSchedule: {
+            value: '1',
+            type: 'select',
+            props: {
+              label: this.$tr('ui.form.status'),
+              options: [
+                {label: this.$tr('ui.label.enabled'), value: '1'},
+                {label: this.$tr('ui.label.disabled'), value: '0'}
+              ]
+            }
+          },
+          schedule: {
+            value: null,
+            type: 'schedule'
           }
         },
         contact: {
