@@ -99,7 +99,7 @@
                             header-class="header-container" expand-separator group="fromAdExpansion">
             <div class="q-pa-md row q-col-gutter-x-sm">
               <!--Help text-->
-              <div class="row items-center text-grey-7 q-mb-md">
+              <div class="row items-center text-grey-7 q-mb-md full-width">
                 <q-icon class="q-mr-sm" name="fas fa-magic"/>
                 {{ $tr('qad.layout.message.chooseDefaultPrice') }}
               </div>
@@ -399,6 +399,7 @@ export default {
             value: null,
             type: 'input',
             props: {
+              vIf: this.settings.contactFields.includes('phone'),
               label: this.$tr('ui.label.phone'),
               mask: 'phone',
               clearable: true,
@@ -409,6 +410,7 @@ export default {
             value: null,
             type: 'input',
             props: {
+              vIf: this.settings.contactFields.includes('whatsapp'),
               label: 'Whatsapp',
               mask: 'phone',
               clearable: true,
@@ -419,6 +421,7 @@ export default {
             value: null,
             type: 'input',
             props: {
+              vIf: this.settings.contactFields.includes('facebook'),
               label: 'Facebook',
               clearable: true,
             }
@@ -427,6 +430,7 @@ export default {
             value: null,
             type: 'input',
             props: {
+              vIf: this.settings.contactFields.includes('instagram'),
               label: 'Instagram',
               clearable: true
             }
@@ -435,6 +439,7 @@ export default {
             value: null,
             type: 'input',
             props: {
+              vIf: this.settings.contactFields.includes('twitter'),
               label: 'Twitter',
               clearable: true
             }
@@ -443,6 +448,7 @@ export default {
             value: null,
             type: 'input',
             props: {
+              vIf: this.settings.contactFields.includes('youtube'),
               label: 'YouTube',
               clearable: true
             }
@@ -509,7 +515,8 @@ export default {
     settings() {
       return {
         politics: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithPoliticsOfPrivacy'),
-        terms: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithTermsAndConditions')
+        terms: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithTermsAndConditions'),
+        contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || []
       }
     },
     //Termns and conditions
