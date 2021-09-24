@@ -101,7 +101,7 @@
               <!--Fields-->
               <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-4"
                              :field="field" v-model="form.prices[field.name]"
-                             @input="changeDefaultPrice(field.name)"/>
+                             @input="val => changeDefaultPrice(field.name, val)"/>
               <!--Actions-->
               <div class="col-12 text-right">
                 <q-btn @click="setPricesFields()" :label="$tr('ui.label.add')" color="green" rounded unelevated
@@ -737,7 +737,7 @@ export default {
           this.$alert.info({message: `${this.$tr('ui.message.recordUpdated')}`})
           this.$hook.dispatchEvent('wasUpdated', {entityName: config('main.qad.entityNames.ad')})
           this.loading = false
-          this.$router.push({name: 'qad.ads.index'})
+          //this.$router.push({name: 'qad.ads.index'})
         }).catch(error => {
           this.$alert.error({message: `${this.$tr('ui.message.recordNoUpdated')}`})
           this.loading = false
@@ -745,8 +745,8 @@ export default {
       })
     },
     //change defualt price
-    changeDefaultPrice(fieldName) {
-      if (fieldName.includes('default')) {
+    changeDefaultPrice(fieldName, val) {
+      if (fieldName.includes('default') && parseInt(val)) {
         Object.keys(this.form.prices).forEach(name => {
           if (name.includes('default') && (name != fieldName)) {
             this.$set(this.form.prices, name, '0')
