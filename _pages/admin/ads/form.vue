@@ -320,6 +320,7 @@ export default {
               falseValue: '0',
             }
           },
+          ...(this.termsAndConditions ? {terms: this.termsAndConditions} : {})
         },
         location: {
           countryId: {
@@ -501,6 +502,45 @@ export default {
       this.adInfo.adUps.forEach(up => {
         if (up.status) response.push(up)
       })
+      //Response
+      return response
+    },
+    //Get settings
+    settings() {
+      return {
+        politics: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithPoliticsOfPrivacy'),
+        terms: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithTermsAndConditions')
+      }
+    },
+    //Termns and conditions
+    termsAndConditions() {
+      if (config('app.mode') != 'ipanel') return false
+      let settings = this.settings
+
+      //Validate settin data
+      if (!settings.politics && !settings.terms) return false
+
+      //Add links to terms and conditions
+      let concatData = ''
+      if (settings.politics)
+        concatData += `<a href="${settings.politics}" target="_blank" class="text-green"><b>${this.$tr('quser.layout.message.privacyPolicy')}</b></a>,`
+      if (settings.terms)
+        concatData += `<a href="${settings.terms}" target="_blank" class="text-green"><b>${this.$tr('quser.layout.message.termsAndConditions')}</b></a>,`
+
+      //Default response
+      let response = {
+        name: 'terms',
+        value: null,
+        type: 'checkbox',
+        props: {
+          rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
+          label: this.$tr('quser.layout.message.privacyData', {
+            concatData: concatData,
+            siteName: this.$store.getters['qsiteApp/getSettingValueByName']('core::site-name')
+          }),
+        }
+      }
+
       //Response
       return response
     }
