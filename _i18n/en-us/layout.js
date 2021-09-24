@@ -13,6 +13,7 @@ export default {
   },
   message: {
     automaticUploads: '¡Automatic Uploads!',
+    chooseDefaultPrice : 'You can select the price you want to appear by default in your ad.'
   },
   form: {
     user: "User",

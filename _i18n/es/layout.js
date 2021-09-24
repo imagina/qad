@@ -13,6 +13,7 @@ export default {
   },
   message: {
     automaticUploads: '¡Subidas Automaticas!',
+    chooseDefaultPrice: 'Puedes seleccionar el precio quieres que aparezca por defecto en tu anuncio.'
   },
   form: {
     user: "Usuario",

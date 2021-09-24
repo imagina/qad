@@ -98,6 +98,11 @@
                             class="box-collapse q-mb-md"
                             header-class="header-container" expand-separator group="fromAdExpansion">
             <div class="q-pa-md row q-col-gutter-x-sm">
+              <!--Help text-->
+              <div class="row items-center text-grey-7 q-mb-md">
+                <q-icon class="q-mr-sm" name="fas fa-magic"/>
+                {{ $tr('qad.layout.message.chooseDefaultPrice') }}
+              </div>
               <!--Fields-->
               <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-4"
                              :field="field" v-model="form.prices[field.name]"
@@ -474,7 +479,8 @@ export default {
               zone: 'videos',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              multiple: true
+              multiple: true,
+              maxFiles: 3
             }
           }
         },
