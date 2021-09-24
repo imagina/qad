@@ -19,15 +19,15 @@ export default {
           to: {name: 'qad.ads.create'}
         },
         read: {
+          showAs: 'grid',
+          allowToggleView: false,
           columns: [
             {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
             {name: 'name', label: this.$tr('ui.form.name'), field: 'title', align: 'left'},
-            {name: 'slug', label: this.$tr('ui.form.slug'), field: 'slug', align: 'left'},
             {
               name: 'user', label: this.$tr('qad.layout.form.user'), field: 'user', align: 'left',
               format: val => (val && val.fullName) ? val.fullName : ''
             },
-            {name: 'statusName', label: this.$tr('ui.form.status'), field: 'statusName', align: 'left'},
             {
               name: 'featured', label: this.$tr('ui.label.featured'), field: 'featured', align: 'left',
               format: val => val ? this.$tr('ui.label.yes') : this.$tr('ui.label.no')
@@ -35,13 +35,6 @@ export default {
             {
               name: 'checked', label: this.$tr('qad.sidebar.checked'), field: 'checked', align: 'left',
               format: val => (val == 1) ? this.$tr('ui.label.yes') : this.$tr('ui.label.no')
-            },
-            {
-              name: 'category', label: this.$trp('ui.label.category'), field: 'categories',
-              align: 'left', classes: 'ellipsis', style: 'max-width : 250px',
-              format: val => val ? val.map(item => {
-                return item.title
-              }).join(', ') : ''
             },
             {
               name: 'created_at', label: this.$tr('ui.form.createdAt'), field: 'createdAt', align: 'right',
@@ -69,7 +62,7 @@ export default {
             },
             {
               icon: 'fas fa-rocket',
-              tooltip: this.$tr('ui.label.boost'),
+              tooltip: this.$tr('ui.label.pay'),
               color: 'blue',
               action: (item) => {
                 this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/pins/${item.slug}/buy-up`, true)
