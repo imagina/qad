@@ -37,7 +37,7 @@ export default {
     rates: 'Tarifas para tu anuncio',
     daysLimit: 'Limite De Dias',
     upsDaily: 'Subidas Diarias',
-    adUps: '¿Cómo quieres impulsar tu anuncio?',
+    adUps: '¿Cómo quieres pagar tu anuncio?',
     daysCounter: 'Contador (Dias)',
     upsCounter: 'Contador (Subidas)',
     fromDate: 'Fecha de Inicio',

@@ -159,7 +159,7 @@
               </div>
               <!--Actions-->
               <div class=" col-12 text-right">
-                <q-btn :label="$tr('ui.label.boost')" color="green" rounded unelevated size="10px" icon="fas fa-rocket"
+                <q-btn :label="$tr('ui.label.pay')" color="green" rounded unelevated size="10px" icon="fas fa-rocket"
                        @click="$helper.openExternalURL(`${$store.state.qsiteApp.baseUrl}/pins/${adInfo.slug}/buy-up`, true)"/>
               </div>
             </div>

@@ -37,7 +37,7 @@ export default {
     rates: 'Rates',
     daysLimit: 'Limit Of Days',
     upsDaily: 'Ups Daily',
-    adUps: 'How boost your AD?',
+    adUps: 'How pay your AD?',
     daysCounter: 'Days Counter',
     upsCounter: 'Upd Counter',
     fromDate: 'From Date',
