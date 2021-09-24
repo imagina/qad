@@ -99,8 +99,9 @@
                             header-class="header-container" expand-separator group="fromAdExpansion">
             <div class="q-pa-md row q-col-gutter-x-sm">
               <!--Fields-->
-              <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-6"
-                             :field="field" v-model="form.prices[field.name]"/>
+              <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-4"
+                             :field="field" v-model="form.prices[field.name]"
+                             @input="changeDefaultPrice(field.name)"/>
               <!--Actions-->
               <div class="col-12 text-right">
                 <q-btn @click="setPricesFields()" :label="$tr('ui.label.add')" color="green" rounded unelevated
@@ -554,8 +555,9 @@ export default {
           //Set prices
           if (response.data.options.prices) {
             response.data.options.prices.map((item, key) => {
-              this.form.prices[`description${key}`] = item.description
-              this.form.prices[`price${key}`] = item.value
+              this.$set(this.form.prices, `description${key}`, item.description)
+              this.$set(this.form.prices, `price${key}`, item.value)
+              this.$set(this.form.prices, `default${key}`, item.default)
             })
           }
           if (response.data.options.map) {
@@ -628,7 +630,20 @@ export default {
               type: 'number',
               rules: [val => !val || (val >= 10) || this.$tr('ui.message.fieldMinValue', {num: 10})]
             }
-          }
+          },
+          {
+            value: '0',
+            type: 'select',
+            name: 'default' + (fieldNum + i),
+            props: {
+              label: this.$tr('ui.form.default'),
+              useInput: false,
+              options: [
+                {label: this.$tr('ui.label.yes'), value: '1'},
+                {label: this.$tr('ui.label.no'), value: '0'}
+              ]
+            }
+          },
         ]
       }
     },
@@ -662,7 +677,11 @@ export default {
 
           if (formData.prices[`description${i}`] && formData.prices[`price${i}`]) {
             //Add to prices date
-            pricesData.push({description: formData.prices[`description${i}`], value: itemPrice})
+            pricesData.push({
+              description: formData.prices[`description${i}`],
+              value: itemPrice,
+              default: formData.prices[`default${i}`],
+            })
             //Validate if is min price
             if ((adMinPrice == 0) || (itemPrice < adMinPrice)) adMinPrice = itemPrice
             //Validate if is max price
@@ -725,6 +744,16 @@ export default {
         })
       })
     },
+    //change defualt price
+    changeDefaultPrice(fieldName) {
+      if (fieldName.includes('default')) {
+        Object.keys(this.form.prices).forEach(name => {
+          if (name.includes('default') && (name != fieldName)) {
+            this.$set(this.form.prices, name, '0')
+          }
+        })
+      }
+    }
   }
 }
 </script>
