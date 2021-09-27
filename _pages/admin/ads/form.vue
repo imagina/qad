@@ -689,7 +689,7 @@ export default {
             type: 'select',
             name: 'default' + (fieldNum + i),
             props: {
-              label: this.$tr('ui.form.default'),
+              label: this.$tr('qad.layout.form.featuredRate'),
               useInput: false,
               options: [
                 {label: this.$tr('ui.label.yes'), value: '1'},
@@ -790,7 +790,7 @@ export default {
           this.$alert.info({message: `${this.$tr('ui.message.recordUpdated')}`})
           this.$hook.dispatchEvent('wasUpdated', {entityName: config('main.qad.entityNames.ad')})
           this.loading = false
-          //this.$router.push({name: 'qad.ads.index'})
+          this.$router.push({name: 'qad.ads.index'})
         }).catch(error => {
           this.$alert.error({message: `${this.$tr('ui.message.recordNoUpdated')}`})
           this.loading = false

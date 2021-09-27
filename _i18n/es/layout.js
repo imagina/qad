@@ -45,7 +45,8 @@ export default {
     fromHour: 'Hora de Inicio',
     toHour: 'Hora Fin',
     nextUpAt: 'Fecha Siguiente Subida',
-    rangeMinutes: 'Sube cada (Minutos)'
+    rangeMinutes: 'Sube cada (Minutos)',
+    featuredRate: 'Tarifa Destacada'
   },
   options: {
     pending: "Pendiente",

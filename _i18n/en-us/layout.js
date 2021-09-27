@@ -13,7 +13,7 @@ export default {
   },
   message: {
     automaticUploads: '¡Automatic Uploads!',
-    chooseDefaultPrice : 'You can select the price you want to appear by default in your ad.'
+    chooseDefaultPrice: 'You can select the price you want to appear by default in your ad.'
   },
   form: {
     user: "User",
@@ -45,7 +45,8 @@ export default {
     fromHour: 'From Hour',
     toHour: 'To Hour',
     nextUpAt: 'Next Up At',
-    rangeMinutes : 'Go Up Every (Minutes)'
+    rangeMinutes: 'Go Up Every (Minutes)',
+    featuredRate: 'Featured Rate'
   },
   options: {
     pending: "Pending",
