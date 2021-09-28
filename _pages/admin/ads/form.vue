@@ -455,16 +455,6 @@ export default {
           }
         },
         media: {
-          mediasSingle: {
-            value: {},
-            type: 'media',
-            props: {
-              label: this.$tr('ui.label.mainImage'),
-              zone: 'mainimage',
-              entity: "Modules\\Iad\\Entities\\Ad",
-              entityId: null
-            }
-          },
           gallery: {
             name: 'mediasMulti',
             value: {},
@@ -474,7 +464,8 @@ export default {
               zone: 'gallery',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              multiple: true
+              multiple: true,
+              directUpload: true
             }
           },
           videos: {
@@ -487,7 +478,8 @@ export default {
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
               multiple: true,
-              maxFiles: 3
+              maxFiles: 3,
+              directUpload: true
             }
           }
         },
