@@ -217,7 +217,8 @@ export default {
           featured: null,
           lat: null,
           lng: null,
-          map: null
+          map: null,
+          terms: 0
         },
         fieldsTranslatable: {
           title: null,
@@ -463,7 +464,7 @@ export default {
               zone: 'mainimage',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              directUpload : true
+              directUpload: true
             }
           },
           gallery: {
@@ -540,7 +541,7 @@ export default {
       //Default response
       let response = {
         name: 'terms',
-        value: null,
+        value: 0,
         type: 'checkbox',
         props: {
           rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
@@ -599,7 +600,7 @@ export default {
         }
         //Request
         this.$crud.show('apiRoutes.qad.ads', this.adId, requestParams).then(response => {
-          this.locale.form = response.data//Set locale data
+          this.locale.form = {...response.data, terms: 1}//Set locale data
           //Save ad info
           this.adInfo = response.data
           //Set fields data
