@@ -455,6 +455,17 @@ export default {
           }
         },
         media: {
+          mediasSingle: {
+            value: {},
+            type: 'media',
+            props: {
+              label: this.$tr('ui.label.mainImage'),
+              zone: 'mainimage',
+              entity: "Modules\\Iad\\Entities\\Ad",
+              entityId: null,
+              directUpload : true
+            }
+          },
           gallery: {
             name: 'mediasMulti',
             value: {},
