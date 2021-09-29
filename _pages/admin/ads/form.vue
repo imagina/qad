@@ -464,7 +464,8 @@ export default {
               zone: 'mainimage',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              directUpload: true
+              accept: 'images'
+              //directUpload: true
             }
           },
           gallery: {
@@ -472,12 +473,13 @@ export default {
             value: {},
             type: 'media',
             props: {
-              label: `${this.$tr('ui.form.gallery')} (jpg,png,jpeg)`,
+              label: `${this.$tr('ui.form.gallery')} (${this.$trp('ui.label.image')})`,
               zone: 'gallery',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
               multiple: true,
-              directUpload: true
+              accept: 'images'
+              //directUpload: true
             }
           },
           videos: {
@@ -485,13 +487,14 @@ export default {
             value: {},
             type: 'media',
             props: {
-              label: `Videos (mp4,avi)`,
+              label: `Videos`,
               zone: 'videos',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
               multiple: true,
               maxFiles: 3,
-              directUpload: true
+              accept: 'videos'
+              //directUpload: true
             }
           }
         },
