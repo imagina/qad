@@ -464,8 +464,8 @@ export default {
               zone: 'mainimage',
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
-              accept: 'images'
-              //directUpload: true
+              accept: 'images',
+              directUpload: true
             }
           },
           gallery: {
@@ -478,8 +478,8 @@ export default {
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
               multiple: true,
-              accept: 'images'
-              //directUpload: true
+              accept: 'images',
+              directUpload: true
             }
           },
           videos: {
@@ -493,8 +493,8 @@ export default {
               entityId: null,
               multiple: true,
               maxFiles: 3,
-              accept: 'videos'
-              //directUpload: true
+              accept: 'videos',
+              directUpload: true
             }
           }
         },
