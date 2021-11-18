@@ -52,5 +52,11 @@ export default {
     pending: "Pendiente",
     approved: "Aprobado",
     denied: "Rechazado",
+  },
+  adCheck: {
+    checked: 'Felicitaciones! Tu anuncio está verificado',
+    noRequested: 'Tu anuncio aún no está verificado, debes crear una petición para que sea revisado',
+    requested: 'Solo un poco más, estamos verificando tu anuncio',
+    rejected: 'Tu anuncio no pudo ser verificado, revisa tu información y vuelve a crear la petición para que sea revisado'
   }
 }

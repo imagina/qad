@@ -37,6 +37,24 @@
             <dynamic-field v-for="(field, keyField) in extraFields" :key="keyField" :field="field"
                            v-model="form[field.fakeFieldName || 'options'][field.name || keyField]"/>
           </div>
+          <!--Check Ad Status-->
+          <div v-if="checkStatusBanner" rounded dense class="box box-auto-height q-mb-md">
+            <!--Title-->
+            <div class="text-blue-grey text-weight-bold text-subtitle1 row items-center">
+              <q-icon name="fas fa-check-double" class="q-mr-sm"/>
+              {{ $tr('ui.label.checked') }}
+            </div>
+            <q-separator class="q-mt-sm q-mb-md"/>
+            <!--Icon-->
+            <q-icon :name="checkStatusBanner.icon" :color="checkStatusBanner.color" size="20px" class="q-mr-sm"/>
+            <!--Message-->
+            <label class="text-blue-grey">{{ checkStatusBanner.message }}</label>
+            <!--Actions-->
+            <div v-if="checkStatusBanner.action" class="text-right q-mt-md">
+              <q-btn unelevated rounded :color="checkStatusBanner.action.color"
+                     :label="checkStatusBanner.action.label" @click="checkStatusBanner.action.action"/>
+            </div>
+          </div>
           <!--Locations-->
           <q-expansion-item icon="fas fa-map-marker-alt" :label="$trp('qad.layout.form.whereLocation')"
                             class="box-collapse q-mb-md" default-opened
@@ -226,6 +244,14 @@ export default {
           description: null,
         }
       },
+      requestable: {
+        data: null,
+        config: {
+          type: "requestCheckAd",
+          requestable_type: "Modules\\Iad\\Entities\\Ad"
+        }
+      },
+
     }
   },
   computed: {
@@ -523,7 +549,9 @@ export default {
       return {
         politics: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithPoliticsOfPrivacy'),
         terms: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithTermsAndConditions'),
-        contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || []
+        contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || [],
+        contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || [],
+        allowRequestForChecked: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('iad::allowRequestForChecked') || 0)
       }
     },
     //Termns and conditions
@@ -557,6 +585,52 @@ export default {
 
       //Response
       return response
+    },
+    //Strusture to check status
+    checkStatusBanner() {
+      //Validate
+      if (!this.adInfo || !this.settings.allowRequestForChecked) return false
+
+      //instance banner config
+      let configs = {
+        //Checked
+        checked: {
+          color: 'green',
+          icon: 'fas fa-check-circle',
+          message: this.$tr('qad.layout.adCheck.checked')
+        },
+        //No Requested
+        noRequested: {
+          color: 'amber',
+          icon: 'fas fa-exclamation-triangle',
+          message: this.$tr('qad.layout.adCheck.noRequested'),
+          action: {
+            label: this.$tr('ui.label.create'),
+            color: 'green',
+            action: this.createRequestable
+          }
+        },
+        //Requested
+        requested: {
+          color: 'info',
+          icon: 'far fa-clock',
+          message: `${this.$tr('qad.layout.adCheck.requested')}...`
+        },
+        //rejected
+        rejected: {
+          color: 'red',
+          icon: 'far fa-times-circle',
+          message: `${this.$tr('qad.layout.adCheck.rejected')}...`
+        }
+      }
+
+      //Instance config value, checking first if ad is checked else if exist request and return request status
+      let checked = parseInt(this.adInfo.checked || 0)
+      let requestedStatus = this.requestable.data ? this.requestable.data.status.value : null
+      requestedStatus = requestedStatus ? (requestedStatus == 4 ? 'rejected' : 'requested') : 'noRequested'
+
+      //Response
+      return configs[checked ? 'checked' : requestedStatus]
     }
   },
   methods: {
@@ -584,10 +658,71 @@ export default {
       await Promise.all([
         this.getCategories(refresh),
         this.getExtraFields(refresh),
+        this.getRequestForCheckData(refresh)
       ])
       //Get ad data
       await this.getAdData(refresh)
       this.loading = false
+    },
+    //Get Categories
+    getCategories(refresh = false) {
+      return new Promise((resolve, reject) => {
+        //Request params
+        let requestParams = {
+          refresh: refresh
+        }
+        //Request
+        this.$crud.index('apiRoutes.qad.categories', requestParams).then(response => {
+          this.categories = this.$array.builTree(response.data)
+          resolve(response.data)
+        }).catch(error => {
+          resolve(false)
+        })
+      })
+    },
+    //Get extra fields
+    getExtraFields(refresh = false) {
+      return new Promise((resolve, reject) => {
+        //Request params
+        let requestParams = {
+          refresh: refresh,
+          params: {filter: {configName: 'Iad.crud-fields.ads'}}
+        }
+        //Request
+        this.$crud.index('apiRoutes.qsite.configs', requestParams).then(response => {
+          if (response.data) this.extraFields = response.data
+          //Set fake fields
+          Object.values(response.data).forEach(field => {
+            if (field.fakeFieldName) this.$set(this.form, field.fakeFieldName, {})
+          })
+          //Resolve
+          resolve(response.data)
+        }).catch(error => resolve(false))
+      })
+    },
+    //Get ad request data
+    getRequestForCheckData() {
+      return new Promise(resolve => {
+        if (!this.adId) return resolve(true)
+        //Request Params
+        let requestParams = {
+          refresh: true,
+          params: {
+            include: 'status',
+            filter: {
+              field: 'requestable_id',
+              ...this.requestable.config
+            }
+          }
+        }
+        //Request
+        this.$crud.show('apiRoutes.qrequestable.requestables', this.adId, requestParams).then(response => {
+          this.requestable.data = this.$clone(response.data)
+          resolve(response.data)
+        }).catch(error => {
+          resolve(false)
+        })
+      })
     },
     //Get ad data
     getAdData() {
@@ -629,42 +764,6 @@ export default {
         }).catch(error => {
           resolve(false)
         })
-      })
-    },
-    //Get Categories
-    getCategories(refresh = false) {
-      return new Promise((resolve, reject) => {
-        //Request params
-        let requestParams = {
-          refresh: refresh
-        }
-        //Request
-        this.$crud.index('apiRoutes.qad.categories', requestParams).then(response => {
-          this.categories = this.$array.builTree(response.data)
-          resolve(response.data)
-        }).catch(error => {
-          resolve(false)
-        })
-      })
-    },
-    //Get extra fields
-    getExtraFields(refresh = false) {
-      return new Promise((resolve, reject) => {
-        //Request params
-        let requestParams = {
-          refresh: refresh,
-          params: {filter: {configName: 'Iad.crud-fields.ads'}}
-        }
-        //Request
-        this.$crud.index('apiRoutes.qsite.configs', requestParams).then(response => {
-          if (response.data) this.extraFields = response.data
-          //Set fake fields
-          Object.values(response.data).forEach(field => {
-            if (field.fakeFieldName) this.$set(this.form, field.fakeFieldName, {})
-          })
-          //Resolve
-          resolve(response.data)
-        }).catch(error => resolve(false))
       })
     },
     //Set prices fields
@@ -813,6 +912,23 @@ export default {
           }
         })
       }
+    },
+    //create requestable
+    createRequestable() {
+      return new Promise(resolve => {
+        this.loading = true
+        //request data
+        let requestData = {...this.requestable.config, requestableId: this.adId}
+        //request
+        this.$crud.create('apiRoutes.qrequestable.requestables', requestData).then(async response => {
+          this.$alert.success({message: `${this.$tr('ui.message.recordCreated')}`})
+          await this.getRequestForCheckData()
+          this.loading = false
+        }).catch(error => {
+          this.$alert.error({message: `${this.$tr('ui.message.recordNoCreated')}`})
+          this.loading = false
+        })
+      })
     }
   }
 }

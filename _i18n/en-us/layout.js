@@ -52,6 +52,11 @@ export default {
     pending: "Pending",
     approved: "Approved",
     denied: "Denied",
+  },
+  adCheck: {
+    checked: 'Congratulations! Your ad is verified',
+    noRequested: 'Your ad is not verified yet, you must create a request for it to be reviewed',
+    requested: 'Just a little more, we are verifying your ad',
+    rejected: 'Your ad could not be verified, check your information and recreate the request for it to be reviewed'
   }
-
 }
