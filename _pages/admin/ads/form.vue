@@ -232,6 +232,7 @@ export default {
           cityId: null,
           neighborhoodId: null,
           status: '2',
+          sortOrder: null,
           checked: null,
           featured: null,
           lat: null,
@@ -326,6 +327,15 @@ export default {
             loadOptions: {
               apiRoute: 'apiRoutes.qad.adStatus',
               select: {label: 'name', id: 'id'}
+            }
+          },
+          sortOrder: {
+            value: null,
+            type: 'input',
+            props: {
+              label: this.$tr('ui.label.order'),
+              vIf: (config('app.mode') == 'iadmin') ? true : false,
+              type: 'number'
             }
           },
           featured: {
