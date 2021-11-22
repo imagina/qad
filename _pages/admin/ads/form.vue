@@ -230,6 +230,7 @@ export default {
           countryId: null,
           provinceId: null,
           cityId: null,
+          neighborhoodId: null,
           status: '2',
           checked: null,
           featured: null,
@@ -394,6 +395,19 @@ export default {
               apiRoute: this.locale.form.provinceId ? 'apiRoutes.qlocations.cities' : false,
               select: {label: 'name', id: 'id'},
               requestParams: {filter: {province_id: this.locale.form.provinceId}}
+            }
+          },
+          neighborhoodId: {
+            value: null,
+            type: 'select',
+            props: {
+              label: this.$tr('ui.label.neighborhood'),
+              readonly: (this.locale.form.cityId ? false : true)
+            },
+            loadOptions: {
+              apiRoute: this.locale.form.provinceId ? 'apiRoutes.qlocations.neighborhoods' : false,
+              select: {label: 'name', id: 'id'},
+              requestParams: {filter: {cityId: this.locale.form.cityId}}
             }
           },
           map: {
