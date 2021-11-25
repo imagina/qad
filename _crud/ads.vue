@@ -22,7 +22,11 @@ export default {
           showAs: 'grid',
           allowToggleView: false,
           columns: [
-            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
+            {
+              name: 'id', field: 'id', style: 'width: 50px',
+              label: (config('app.mode') == 'iadmin') ? this.$tr('ui.form.id') : '',
+              format: val => (config('app.mode') == 'iadmin') ? val : ''
+            },
             {name: 'name', label: this.$tr('ui.form.name'), field: 'title', align: 'left'},
             {
               name: 'user', label: this.$tr('qad.layout.form.user'), field: 'user', align: 'left',
