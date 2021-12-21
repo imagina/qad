@@ -1,4 +1,5 @@
 export default {
+  moduleName: 'iad',
   //Entities
   entityNames: {
     ad: 'ad',
