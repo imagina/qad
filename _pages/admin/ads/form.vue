@@ -69,19 +69,23 @@
                             class="box-collapse q-mb-md"
                             header-class="header-container" group="fromAdExpansion">
             <!--Category block-->
-            <div v-for="(category, keyCategory) in categories" class="category-content">
-              <!--Title-->
-              <div class="category-title row items-center">
-                <q-icon name="fas fa-circle" size="10px" class="q-mr-xs"/>
-                {{ category.title }}
+            <q-scroll-area style="height: 400px; width: 100%;">
+              <div v-for="(category, keyCategory) in categories" class="category-content">
+                <!--Title-->
+                <div class="category-title row items-center">
+                  <q-checkbox v-model="tmpMainCategories[category.id]" :value="category.id" dense
+                              @input="toggleSelectCategory(category)">
+                    {{ category.title }}
+                  </q-checkbox>
+                </div>
+                <!--Children categories-->
+                <div v-for="(cCategory, indexCCategory) in category.children" :key="indexCCategory"
+                     :class="`category-children ${form.categories.includes(cCategory.id) ? 'active' : ''}`"
+                     @click="toggleSelectCategory(cCategory)">
+                  {{ cCategory.title }}
+                </div>
               </div>
-              <!--Children categories-->
-              <div v-for="(cCategory, indexCCategory) in category.children" :key="indexCCategory"
-                   :class="`category-children ${form.categories.indexOf(cCategory.id) != -1 ? 'active' : ''}`"
-                   @click="toggleSelectCategory(cCategory)">
-                {{ cCategory.title }}
-              </div>
-            </div>
+            </q-scroll-area>
           </q-expansion-item>
           <!--Schedule-->
           <q-expansion-item icon="fas fa-clock" :label="$trp('qad.layout.form.availableSchedule')"
@@ -253,7 +257,7 @@ export default {
           requestable_type: "Modules\\Iad\\Entities\\Ad"
         }
       },
-
+      tmpMainCategories: {}
     }
   },
   computed: {
@@ -515,7 +519,7 @@ export default {
               entity: "Modules\\Iad\\Entities\\Ad",
               entityId: null,
               accept: 'images',
-              directUpload: true
+              directUpload: this.settings.selectFromMedia ? false : true
             }
           },
           gallery: {
@@ -529,7 +533,7 @@ export default {
               entityId: null,
               multiple: true,
               accept: 'images',
-              directUpload: true
+              directUpload: this.settings.selectFromMedia ? false : true
             }
           },
           videos: {
@@ -544,7 +548,7 @@ export default {
               multiple: true,
               maxFiles: 3,
               accept: 'videos',
-              directUpload: true
+              directUpload: this.settings.selectFromMedia ? false : true
             }
           }
         },
@@ -574,7 +578,7 @@ export default {
         politics: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithPoliticsOfPrivacy'),
         terms: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithTermsAndConditions'),
         contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || [],
-        contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || [],
+        selectFromMedia: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('iad::selectFromMedia') || '0'),
         allowRequestForChecked: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('iad::allowRequestForChecked') || 0)
       }
     },
@@ -673,6 +677,10 @@ export default {
       this.$root.$on('page.data.refresh', () => {
         this.pageId = this.$uid()
         this.getData(true)
+      })
+      //Set tmpCategories
+      this.categories.forEach(item => {
+        this.$set(this.tmpMainCategories, item.id, (this.form.categories.includes(item.id)))
       })
     },
     //Get data
