@@ -7,7 +7,7 @@ export default {
     crud: import('@imagina/qad/_crud/ads'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qad.sidebar.adminAds',
+    title: 'iad.cms.sidebar.adminAds',
     icon: 'fas fa-bullhorn',
     authenticated: true,
     subHeader: {
@@ -21,7 +21,7 @@ export default {
     name: 'qad.ads.create',
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qad.sidebar.adminAdsCreate',
+    title: 'iad.cms.sidebar.adminAdsCreate',
     icon: 'fas fa-bullhorn',
     authenticated: true,
     subHeader: {
@@ -39,7 +39,7 @@ export default {
     name: 'qad.ads.edit',
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qad.sidebar.adminAdsUpdate',
+    title: 'iad.cms.sidebar.adminAdsUpdate',
     icon: 'fas fa-bullhorn',
     authenticated: true,
     subHeader: {
@@ -58,7 +58,7 @@ export default {
     crud: import('@imagina/qad/_crud/categories'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qad.sidebar.adminCategories',
+    title: 'iad.cms.sidebar.adminCategories',
     icon: 'fas fa-layer-group',
     authenticated: true,
     subHeader: {
@@ -74,7 +74,7 @@ export default {
     crud: import('@imagina/qad/_crud/ups'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qad.sidebar.adminUps',
+    title: 'iad.cms.sidebar.adminUps',
     icon: 'fas fa-arrow-alt-circle-up',
     authenticated: true,
     subHeader: {
@@ -90,7 +90,7 @@ export default {
     crud: import('@imagina/qad/_crud/adUps'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qad.sidebar.adminAdUps',
+    title: 'iad.cms.sidebar.adminAdUps',
     icon: 'fas fa-chart-line',
     authenticated: true,
     subHeader: {

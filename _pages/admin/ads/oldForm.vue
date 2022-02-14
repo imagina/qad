@@ -8,7 +8,7 @@
             <q-card-section class="q-pa-xl form-general">
 
               <div class="text-h5 text-primary q-mb-xs font-family-secondary capitalize">
-                {{ $tr('qad.sidebar.admin.ads') }}
+                {{ $tr('iad.cms.sidebar.admin.ads') }}
               </div>
               <div class="q-my-lg line-grey full-width"></div>
 
@@ -308,7 +308,7 @@ export default {
             this.form.services = services;
             resolve(true)//Resolve
           }).catch(error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             reject(false)//Resolve
           })
         } else {

@@ -3,7 +3,7 @@ const pages = config('pages') // Get Pages from config
 //Marketplace
 export default [
   {
-    title: 'qad.sidebar.adminGroup',
+    title: 'iad.cms.sidebar.adminGroup',
     icon: 'fas fa-bullhorn',
     children: [
       pages.qad.ads,

@@ -15,7 +15,7 @@ export default {
         permission: 'iad.ads',
         extraFormFields: 'iad.crud-fields.ads',
         create: {
-          title: this.$tr('qad.layout.create.ad'),
+          title: this.$tr('iad.cms.create.ad'),
           to: {name: 'qad.ads.create'}
         },
         read: {
@@ -24,31 +24,31 @@ export default {
           columns: [
             {
               name: 'id', field: 'id', style: 'width: 50px',
-              label: (config('app.mode') == 'iadmin') ? this.$tr('ui.form.id') : '',
+              label: (config('app.mode') == 'iadmin') ? this.$tr('isite.cms.form.id') : '',
               format: val => (config('app.mode') == 'iadmin') ? val : ''
             },
-            {name: 'name', label: this.$tr('ui.form.name'), field: 'title', align: 'left'},
+            {name: 'name', label: this.$tr('isite.cms.form.name'), field: 'title', align: 'left'},
             {
-              name: 'user', label: this.$tr('qad.layout.form.user'), field: 'user', align: 'left',
+              name: 'user', label: this.$tr('iad.cms.form.user'), field: 'user', align: 'left',
               format: val => (val && val.fullName) ? val.fullName : ''
             },
             {
-              name: 'featured', label: this.$tr('ui.label.featured'), field: 'featured', align: 'left',
-              format: val => val ? this.$tr('ui.label.yes') : this.$tr('ui.label.no')
+              name: 'featured', label: this.$tr('isite.cms.label.featured'), field: 'featured', align: 'left',
+              format: val => val ? this.$tr('isite.cms.label.yes') : this.$tr('isite.cms.label.no')
             },
             {
-              name: 'checked', label: this.$tr('qad.sidebar.checked'), field: 'checked', align: 'left',
-              format: val => (val == 1) ? this.$tr('ui.label.yes') : this.$tr('ui.label.no')
+              name: 'checked', label: this.$tr('iad.cms.sidebar.checked'), field: 'checked', align: 'left',
+              format: val => (val == 1) ? this.$tr('isite.cms.label.yes') : this.$tr('isite.cms.label.no')
             },
             {
-              name: 'created_at', label: this.$tr('ui.form.createdAt'), field: 'createdAt', align: 'right',
+              name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'right',
               format: val => val ? this.$trd(val) : '-',
             },
             {
-              name: 'updated_at', label: this.$tr('ui.form.updatedAt'), field: 'updatedAt', align: 'right',
+              name: 'updated_at', label: this.$tr('isite.cms.form.updatedAt'), field: 'updatedAt', align: 'right',
               format: val => val ? this.$trd(val) : '-',
             },
-            {name: 'actions', label: this.$tr('ui.form.actions'), align: 'left'},
+            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
           requestParams: {
             include: 'categories,user',
@@ -59,14 +59,14 @@ export default {
             {
               icon: 'fas fa-eye',
               color: 'info',
-              tooltip: this.$tr('ui.label.view'),
+              tooltip: this.$tr('isite.cms.label.view'),
               action: (item) => {
                 this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/anuncios/${item.slug}`, true)
               },
             },
             {
               icon: 'fas fa-rocket',
-              tooltip: this.$tr('ui.label.pay'),
+              tooltip: this.$tr('isite.cms.label.pay'),
               color: 'blue',
               action: (item) => {
                 this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/pins/${item.slug}/buy-up`, true)
@@ -75,7 +75,7 @@ export default {
           ]
         },
         update: {
-          title: this.$tr('qad.layout.edit.ad'),
+          title: this.$tr('iad.cms.edit.ad'),
           to: 'qad.ads.edit'
         },
         delete: true,
