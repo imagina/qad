@@ -18,7 +18,7 @@ export default {
         permission: 'iad.categories',
         extraFormFields: 'iad.crud-fields.category',
         create: {
-          title: this.$tr('qblog.layout.newCategory'),
+          title: this.$tr('iblog.cms.newCategory'),
         },
         read: {
           columns: [
@@ -54,7 +54,7 @@ export default {
           }
         },
         update: {
-          title: this.$tr('qblog.layout.updateCategory'),
+          title: this.$tr('iblog.cms.updateCategory'),
           requestParams: {include: 'parent'}
         },
         delete: true,
