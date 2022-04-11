@@ -242,7 +242,8 @@ export default {
           lat: null,
           lng: null,
           map: null,
-          terms: 0
+          terms: 0,
+          creadtedFromIp: this.$store.state.qsiteApp.ipAddress,
         },
         fieldsTranslatable: {
           title: null,
@@ -905,7 +906,8 @@ export default {
         options: {
           ...formData.options,
           prices: pricesData,
-          map: formLocale.map
+          map: formLocale.map,
+          createdFromIp : formData.createdFromIp
         },
         minPrice: adMinPrice,
         maxPrice: adMaxPrice,
