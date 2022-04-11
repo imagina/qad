@@ -342,6 +342,16 @@ export default {
               type: 'number'
             }
           },
+          fromIp: {
+            type: 'input',
+            isFakeField : true,
+            value: this.$store.state.qsiteApp.ipAddress,
+            props: {
+              vIf : config('app.mode') == "iadmin" ? true : false,
+              readonly: true,
+              label: `${this.$tr('isite.cms.form.createdFromIp')}`
+            }
+          },
           featured: {
             value: 0,
             type: 'checkbox',
