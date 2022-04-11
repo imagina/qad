@@ -349,7 +349,7 @@ export default {
             props: {
               vIf : config('app.mode') == "iadmin" ? true : false,
               readonly: true,
-              label: `${this.$tr('isite.cms.label.ipAddress')}`
+              label: `${this.$tr('isite.cms.form.createdFromIp')}`
             }
           },
           featured: {

@@ -1,6 +1,11 @@
 <template></template>
 <script>
 export default {
+  mounted() {
+    this.$nextTick(function () {
+      this.init()
+    })
+  },
   data() {
     return {
       crudId: this.$uid()
@@ -85,6 +90,12 @@ export default {
     //Crud info
     crudInfo() {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
+    }
+  },
+  methods :{
+    init() {
+      //trigger get ip actions
+      this.$store.dispatch('qsiteApp/GET_IP_ADDRESS')
     }
   }
 }
