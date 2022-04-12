@@ -59,7 +59,21 @@ export default {
             include: 'categories,user',
             filter: {allTranslations: true}
           },
-          filters: {},
+          filters: {
+            userId: {
+              value: null,
+              type: 'select',
+              props: {
+                label: this.$tr('isite.cms.form.createdBy'),
+                clearable: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.quser.users',
+                select: {label: 'fullName', id: 'id'},
+                filterByQuery: true
+              }
+            }
+          },
           actions: [
             {
               icon: 'fas fa-eye',

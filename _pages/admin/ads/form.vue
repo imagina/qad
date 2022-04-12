@@ -22,7 +22,7 @@
             <div class="text-blue-grey text-weight-bold text-subtitle1 row items-center">
               <q-icon name="fas fa-bullhorn" class="q-mr-sm"/>
               {{ $trp('iad.cms.form.newAd') }}
-              <label v-if="adId" class="q-ml-sm">#{{ adId }}</label>
+              <label v-if="showIdInForm" class="q-ml-sm">#{{ adId }}</label>
             </div>
             <q-separator class="q-mt-sm q-mb-md"/>
             <!--Fields-->
@@ -262,6 +262,10 @@ export default {
     }
   },
   computed: {
+    //show id
+    showIdInForm() {
+      return (config('app.mode') == 'iadmin') && this.adId
+    },
     //Form fields
     formFields() {
       return {
