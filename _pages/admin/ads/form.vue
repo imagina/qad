@@ -243,7 +243,7 @@ export default {
           lng: null,
           map: null,
           terms: 0,
-          creadtedFromIp: this.$store.state.qsiteApp.ipAddress,
+          createdFromIp: this.$store.state.qsiteApp.ipAddress,
         },
         fieldsTranslatable: {
           title: null,
@@ -343,7 +343,7 @@ export default {
               type: 'number'
             }
           },
-          fromIp: {
+          createdFromIp: {
             type: 'input',
             isFakeField : true,
             value: this.$store.state.qsiteApp.ipAddress,
@@ -781,7 +781,12 @@ export default {
         }
         //Request
         this.$crud.show('apiRoutes.qad.ads', this.adId, requestParams).then(response => {
-          this.locale.form = {...response.data, terms: 1}//Set locale data
+         // this.locale.form = {...response.data, terms: 1}//Set locale data
+          this.locale.form = {
+            ...response.data, 
+            terms: 1,
+            createdFromIp: response.data.options?.createdFromIp || this.$store.state.qsiteApp.ipAddress
+          } //set createdFromIp
           //Save ad info
           this.adInfo = response.data
           //Set fields data
@@ -898,16 +903,16 @@ export default {
         for (var itemName in formData.fields)
           fieldsData.push({name: itemName, value: formData.fields[itemName]})
       }
-
       //Response
+      const { createdFromIp, ...rest } = formLocale
       return {
-        ...formLocale,
+        ...rest,
         categories: formData.categories,
         options: {
           ...formData.options,
           prices: pricesData,
           map: formLocale.map,
-          createdFromIp : formData.createdFromIp
+          createdFromIp: createdFromIp
         },
         minPrice: adMinPrice,
         maxPrice: adMaxPrice,
