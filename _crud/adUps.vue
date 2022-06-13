@@ -27,7 +27,10 @@ export default {
             {name: 'daysCounter', label: this.$tr('iad.cms.form.daysCounter'), field: 'daysCounter', align: 'left'},
             {name: 'upsDaily', label: this.$tr('iad.cms.form.upsDaily'), field: 'upsDaily', align: 'left'},
             {name: 'upsCounter', label: this.$tr('iad.cms.form.upsCounter'), field: 'upsCounter', align: 'left'},
-            {name: 'status', label: this.$tr('isite.cms.form.status'), field: 'status', align: 'left'},
+            {
+              name: 'statusField', label: this.$tr('isite.cms.form.status'), field: 'status', align: 'left',
+              format: val => val ? this.$tr('isite.cms.label.enabled') : this.$tr('isite.cms.label.disabled')
+            },
             {
               name: 'rangeMinutes',
               label: this.$tr('iad.cms.form.rangeMinutes'),
