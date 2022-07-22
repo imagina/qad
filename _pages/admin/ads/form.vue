@@ -787,7 +787,7 @@ export default {
         this.$crud.show('apiRoutes.qad.ads', this.adId, requestParams).then(response => {
          // this.locale.form = {...response.data, terms: 1}//Set locale data
           this.locale.form = {
-            ...response.data, 
+            ...response.data,
             terms: 1,
             createdFromIp: response.data.options?.createdFromIp || this.$store.state.qsiteApp.ipAddress
           } //set createdFromIp
@@ -923,7 +923,7 @@ export default {
         fields: fieldsData,
         mediasSingle: formData.mediasSingle,
         mediasMulti: formData.mediasMulti,
-        schedule: formData.schedule
+        schedule: this.$helper.toSnakeCase(formData.schedule)
       }
     },
     //Create Ad
