@@ -181,7 +181,8 @@
               </div>
               <!--Actions-->
               <div class=" col-12 text-right">
-                <q-btn :label="$tr('isite.cms.label.pay')" color="green" rounded unelevated size="10px" icon="fas fa-rocket"
+                <q-btn :label="$tr('isite.cms.label.pay')" color="green" rounded unelevated size="10px"
+                       icon="fas fa-rocket"
                        @click="$helper.openExternalURL(`${$store.state.qsiteApp.baseUrl}/pins/${adInfo.slug}/buy-up`, true)"/>
               </div>
             </div>
@@ -349,10 +350,10 @@ export default {
           },
           createdFromIp: {
             type: 'input',
-            isFakeField : true,
+            isFakeField: true,
             value: this.$store.state.qsiteApp.ipAddress,
             props: {
-              vIf : config('app.mode') == "iadmin" ? true : false,
+              vIf: config('app.mode') == "iadmin" ? true : false,
               readonly: true,
               label: `${this.$tr('isite.cms.form.createdFromIp')}`
             }
@@ -785,7 +786,7 @@ export default {
         }
         //Request
         this.$crud.show('apiRoutes.qad.ads', this.adId, requestParams).then(response => {
-         // this.locale.form = {...response.data, terms: 1}//Set locale data
+          // this.locale.form = {...response.data, terms: 1}//Set locale data
           this.locale.form = {
             ...response.data,
             terms: 1,
@@ -908,7 +909,7 @@ export default {
           fieldsData.push({name: itemName, value: formData.fields[itemName]})
       }
       //Response
-      const { createdFromIp, ...rest } = formLocale
+      const {createdFromIp, ...rest} = formLocale
       return {
         ...rest,
         categories: formData.categories,
@@ -923,7 +924,7 @@ export default {
         fields: fieldsData,
         mediasSingle: formData.mediasSingle,
         mediasMulti: formData.mediasMulti,
-        schedule: this.$helper.toSnakeCase(formData.schedule)
+        schedule: formData.schedule
       }
     },
     //Create Ad
