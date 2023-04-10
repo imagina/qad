@@ -4,7 +4,7 @@ const pages = config('pages') // Get Pages from config
 export default [
   {
     title: 'iad.cms.sidebar.adminGroup',
-    icon: 'fas fa-bullhorn',
+    icon: 'fal fa-rectangle-ad',
     children: [
       pages.qad.ads,
       pages.qad.categories,

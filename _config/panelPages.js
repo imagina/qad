@@ -8,7 +8,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master'),
     title: 'iad.cms.sidebar.panelAds',
-    icon: 'fas fa-bullhorn',
+icon: 'fal fa-rectangle-ad',
     authenticated: true,
     subHeader: {
       refresh: true
@@ -22,7 +22,7 @@ export default {
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master'),
     title: 'iad.cms.sidebar.adminAdsCreate',
-    icon: 'fas fa-bullhorn',
+    icon: 'fal fa-rectangle-ad',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -40,7 +40,7 @@ export default {
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master'),
     title: 'iad.cms.sidebar.adminAdsUpdate',
-    icon: 'fas fa-bullhorn',
+    icon: 'fal fa-rectangle-ad',
     authenticated: true,
     subHeader: {
       refresh: true,

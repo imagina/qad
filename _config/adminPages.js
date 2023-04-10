@@ -8,7 +8,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iad.cms.sidebar.adminAds',
-    icon: 'fas fa-bullhorn',
+    icon: 'fal fa-rectangle-ad',
     authenticated: true,
     subHeader: {
       refresh: true
@@ -22,7 +22,7 @@ export default {
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iad.cms.sidebar.adminAdsCreate',
-    icon: 'fas fa-bullhorn',
+    icon: 'fal fa-rectangle-ad',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -40,7 +40,7 @@ export default {
     page: () => import('@imagina/qad/_pages/admin/ads/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iad.cms.sidebar.adminAdsUpdate',
-    icon: 'fas fa-bullhorn',
+    icon: 'fal fa-rectangle-ad',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -59,7 +59,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iad.cms.sidebar.adminCategories',
-    icon: 'fas fa-layer-group',
+    icon: 'fa-light fa-layer-group',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -75,7 +75,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iad.cms.sidebar.adminUps',
-    icon: 'fas fa-arrow-alt-circle-up',
+    icon: 'fa-light fa-up-from-bracket',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -91,7 +91,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iad.cms.sidebar.adminAdUps',
-    icon: 'fas fa-chart-line',
+    icon: 'fa-light fa-arrow-up-wide-short',
     authenticated: true,
     subHeader: {
       refresh: true,
