@@ -724,7 +724,9 @@ export default {
           this.categories = this.$array.builTree(response.data)
           resolve(response.data)
         }).catch(error => {
-          resolve(false)
+          this.$apiResponse.handleError(error, () => {
+            resolve(false)
+          })
         })
       })
     },
@@ -745,7 +747,11 @@ export default {
           })
           //Resolve
           resolve(response.data)
-        }).catch(error => resolve(false))
+        }).catch(error => {
+          this.$apiResponse.handleError(error, () => {
+            resolve(false)
+          })
+        })
       })
     },
     //Get ad request data
