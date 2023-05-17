@@ -10,7 +10,7 @@
                 @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))">
           <!--Page Actions-->
           <div class="box box-auto-height q-mb-md">
-            <page-actions :title="$route.meta.title"/>
+            <page-actions :title="$tr($route.meta.title)"/>
           </div>
           <!--Language-->
           <div v-show="locale.fieldsTranslatable && Object.keys(locale.fieldsTranslatable).length" class="q-mb-md">

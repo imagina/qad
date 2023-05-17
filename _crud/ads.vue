@@ -25,7 +25,6 @@ export default {
         },
         read: {
           showAs: 'grid',
-          allowToggleView: false,
           columns: [
             {
               name: 'id', field: 'id', style: 'width: 50px',
@@ -44,6 +43,13 @@ export default {
             {
               name: 'checked', label: this.$tr('iad.cms.sidebar.checked'), field: 'checked', align: 'left',
               format: val => (val == 1) ? this.$tr('isite.cms.label.yes') : this.$tr('isite.cms.label.no')
+            },
+            {
+              name: 'sortOrder',
+              label: this.$tr('isite.cms.label.order'),
+              field: 'sortOrder',
+              align: 'left',
+              sortable: true
             },
             {
               name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'right',
@@ -106,7 +112,7 @@ export default {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
     }
   },
-  methods :{
+  methods: {
     init() {
       //trigger get ip actions
       this.$store.dispatch('qsiteApp/GET_IP_ADDRESS')
