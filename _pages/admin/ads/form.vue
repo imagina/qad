@@ -952,7 +952,8 @@ export default {
     updateItem() {
       return new Promise(resolve => {
         this.loading = true
-        this.$crud.update('apiRoutes.qad.ads', this.adId, this.getFormData()).then(response => {
+        let requestData = {...this.getFormData(), id : this.adId}
+        this.$crud.update('apiRoutes.qad.ads', this.adId, requestData).then(response => {
           this.$alert.info({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
           this.$hook.dispatchEvent('wasUpdated', {entityName: config('main.qad.entityNames.ad')})
           this.loading = false
