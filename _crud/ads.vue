@@ -62,7 +62,7 @@ export default {
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
           requestParams: {
-            include: 'categories,user',
+            include: 'categories,user,qrs',
             filter: {allTranslations: true}
           },
           filters: {
