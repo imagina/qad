@@ -36,7 +36,7 @@ export default {
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
-          requestParams: {include: 'parent'},
+          requestParams: {include: 'parent,qrs'},
           filters : {
             parentId: {
               value: null,
