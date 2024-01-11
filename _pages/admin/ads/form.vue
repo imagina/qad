@@ -919,6 +919,8 @@ export default {
       return {
         ...rest,
         categories: formData.categories,
+        lat: formLocale.map.lat,
+        lng: formLocale.map.lng,
         options: {
           ...formData.options,
           prices: pricesData,
