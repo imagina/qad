@@ -1018,4 +1018,6 @@ export default {
       &.active
         background $green
         color white
+  .q-page-sticky
+    z-index: 1500
 </style>
