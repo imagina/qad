@@ -916,15 +916,21 @@ export default {
       }
       //Response
       const {createdFromIp, ...rest} = formLocale
+
+      const mapInfo = {
+        lat: formLocale.map ? formLocale.map?.lat ?? '' : '',
+        lng: formLocale.map ? formLocale.map?.lng  ?? '' : ''
+      }
+      
       return {
         ...rest,
         categories: formData.categories,
-        lat: formLocale.map.lat,
-        lng: formLocale.map.lng,
+        lat: mapInfo.lat,
+        lng: mapInfo.lng,
         options: {
           ...formData.options,
           prices: pricesData,
-          map: formLocale.map,
+          map: mapInfo,
           createdFromIp: createdFromIp
         },
         minPrice: adMinPrice,
