@@ -921,7 +921,7 @@ export default {
         lat: formLocale.map ? formLocale.map?.lat ?? '' : '',
         lng: formLocale.map ? formLocale.map?.lng  ?? '' : ''
       }
-      
+
       return {
         ...rest,
         categories: formData.categories,
@@ -1002,7 +1002,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
+<style lang="sass">
 #contentAdFormPage
   .category-content
     padding 10px
