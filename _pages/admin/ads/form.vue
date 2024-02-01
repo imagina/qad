@@ -1002,7 +1002,7 @@ export default {
   }
 }
 </script>
-<style lang="sass">
+<style lang="scss">
 #contentAdFormPage
   .category-content
     padding 10px
