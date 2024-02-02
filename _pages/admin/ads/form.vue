@@ -1003,27 +1003,34 @@ export default {
 }
 </script>
 <style lang="scss">
-#contentAdFormPage
-  .category-content
-    padding 10px
+#contentAdFormPage {
+  .category-content {
+    padding: 10px;
 
-    .category-title
-      font-weight bold
-      color $blue-grey
-      margin-bottom 5px
-      text-transform uppercase
+    .category-title {
+      font-weight: bold;
+      color: $blue-grey;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
 
-    .category-children
-      display inline-block
-      background $grey-3
-      border-radius 5px
-      padding 3px
-      cursor pointer
-      margin 4px
+    .category-children {
+      display: inline-block;
+      background: $grey-3;
+      border-radius: 5px;
+      padding: 3px;
+      cursor: pointer;
+      margin: 4px;
 
-      &.active
-        background $green
-        color white
-  .q-page-sticky
-    z-index: 1500
+      &.active {
+        background: $green;
+        color: white;
+      }
+    }
+  }
+
+  .q-page-sticky {
+    z-index: 1500;
+  }
+}
 </style>
