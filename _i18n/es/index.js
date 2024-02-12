@@ -1,5 +1,5 @@
-import layout from '@imagina/qad/_i18n/es/layout'
-import sidebar from '@imagina/qad/_i18n/es/sidebar'
+import layout from 'modules/qad/_i18n/es/layout'
+import sidebar from 'modules/qad/_i18n/es/sidebar'
 
 export default {
   layout,

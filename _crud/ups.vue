@@ -1,7 +1,5 @@
 <template></template>
 <script>
-//Component
-import crud from '@imagina/qcrud/_components/crud'
 
 export default {
   data() {
