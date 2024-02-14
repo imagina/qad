@@ -696,7 +696,7 @@ export default {
       })
       //Set tmpCategories
       this.categories.forEach(item => {
-        this.$set(this.tmpMainCategories, item.id, (this.form.categories.includes(item.id)))
+        this.tmpMainCategories[item.id] = this.form.categories.includes(item.id)
       })
     },
     //Get data
@@ -743,7 +743,7 @@ export default {
           if (response.data) this.extraFields = response.data
           //Set fake fields
           Object.values(response.data).forEach(field => {
-            if (field.fakeFieldName) this.$set(this.form, field.fakeFieldName, {})
+            if (field.fakeFieldName) this.form[field.fakeFieldName] = {}
           })
           //Resolve
           resolve(response.data)
@@ -809,9 +809,9 @@ export default {
           //Set prices
           if (response.data.options.prices) {
             response.data.options.prices.map((item, key) => {
-              this.$set(this.form.prices, `description${key}`, item.description)
-              this.$set(this.form.prices, `price${key}`, item.value)
-              this.$set(this.form.prices, `default${key}`, item.default)
+              this.form.prices[`description${key}`] = item.description
+              this.form.prices[`price${key}`] = item.value
+              this.form.prices[`default${key}`] = item.default
             })
           }
           if (response.data.options.map) {
@@ -977,7 +977,7 @@ export default {
       if (fieldName.includes('default') && parseInt(val)) {
         Object.keys(this.form.prices).forEach(name => {
           if (name.includes('default') && (name != fieldName)) {
-            this.$set(this.form.prices, name, '0')
+            this.form.prices[name] = '0'
           }
         })
       }
