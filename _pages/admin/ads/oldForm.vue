@@ -120,7 +120,7 @@
                       :options="provincesOptions"
                       value-consists-of="BRANCH_PRIORITY"
                       v-model="form.provinceId"
-                      @input="val => { getCities() }"
+                      @update:modelValue="val => { getCities() }"
                       placeholder=""
                     />
                   </div>
@@ -135,7 +135,7 @@
                       class="q-mb-md"
                       :options="cityOptions"
                       value-consists-of="BRANCH_PRIORITY"
-                      @input="val => { getNeighborhoods() }"
+                      @update:modelValue="val => { getNeighborhoods() }"
                       v-model="form.cityId"
                       placeholder=""
                     />

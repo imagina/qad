@@ -29,7 +29,7 @@
             <div v-if="locale.success">
               <dynamic-field v-for="(field, keyField) in formFields.main" :key="keyField" :field="field"
                              v-model="locale.formTemplate[field.name || keyField]" :language="locale.language"
-                             @input="handlerInputChange((field.name || keyField))"/>
+                             @update:modelValue="handlerInputChange((field.name || keyField))"/>
             </div>
           </div>
           <!--Extra Fields-->
@@ -74,7 +74,7 @@
                 <!--Title-->
                 <div class="category-title row items-center">
                   <q-checkbox v-model="tmpMainCategories[category.id]" :value="category.id" dense
-                              @input="toggleSelectCategory(category)">
+                              @update:modelValue="toggleSelectCategory(category)">
                     {{ category.title }}
                   </q-checkbox>
                 </div>
@@ -128,7 +128,7 @@
               <!--Fields-->
               <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-4"
                              :field="field" v-model="form.prices[field.name]"
-                             @input="val => changeDefaultPrice(field.name, val)"/>
+                             @update:modelValue="val => changeDefaultPrice(field.name, val)"/>
               <!--Actions-->
               <div class="col-12 text-right">
                 <q-btn @click="setPricesFields()" :label="$tr('isite.cms.label.add')" color="green" rounded unelevated
