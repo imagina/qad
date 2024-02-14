@@ -199,9 +199,10 @@
   </div>
 </template>
 <script>
+import { eventBus } from 'src/plugins/utils'
 export default {
   beforeDestroy() {
-    this.$root.$off('page.data.refresh')
+    eventBus.off('page.data.refresh')
   },
   props: {},
   components: {},
@@ -690,7 +691,7 @@ export default {
       let pricesValues = Object.keys(this.form.prices).length
       this.setPricesFields(pricesValues ? (pricesValues / 2) : 1)
       //Listen refresh page
-      this.$root.$on('page.data.refresh', () => {
+      eventBus.on('page.data.refresh', () => {
         this.pageId = this.$uid()
         this.getData(true)
       })
