@@ -592,11 +592,11 @@ export default {
     //Get settings
     settings() {
       return {
-        politics: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithPoliticsOfPrivacy'),
-        terms: this.$store.getters['qsiteApp/getSettingValueByName']('iad::adWithTermsAndConditions'),
-        contactFields: this.$store.getters['qsiteApp/getSettingValueByName']('iad::contactFields') || [],
-        selectFromMedia: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('iad::selectFromMedia') || '0'),
-        allowRequestForChecked: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('iad::allowRequestForChecked') || 0)
+        politics: this.$getSetting('iad::adWithPoliticsOfPrivacy'),
+        terms: this.$getSetting('iad::adWithTermsAndConditions'),
+        contactFields: this.$getSetting('iad::contactFields') || [],
+        selectFromMedia: parseInt(this.$getSetting('iad::selectFromMedia') || '0'),
+        allowRequestForChecked: parseInt(this.$getSetting('iad::allowRequestForChecked') || 0)
       }
     },
     //Termns and conditions
@@ -623,7 +623,7 @@ export default {
           rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
           label: this.$tr('iprofile.cms.message.privacyData', {
             concatData: concatData,
-            siteName: this.$store.getters['qsiteApp/getSettingValueByName']('core::site-name')
+            siteName: this.$getSetting('core::site-name')
           }),
         }
       }
