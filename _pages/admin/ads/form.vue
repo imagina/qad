@@ -623,7 +623,7 @@ export default {
           rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
           label: this.$tr('iprofile.cms.message.privacyData', {
             concatData: concatData,
-            siteName: this.$store.getters['qsiteApp/getSettingValueByName']('core::site-name')
+            siteName: this.$getSetting('core::site-name')
           }),
         }
       }
