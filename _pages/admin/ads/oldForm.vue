@@ -80,7 +80,6 @@
                     </p>
                     <tree-select
                       :clearable="false"
-                      :append-to-body="true"
                       class="q-mb-md"
                       filter="searchText"
                       :options="categoryOptions"
@@ -97,7 +96,6 @@
                     </p>
                     <tree-select
                       :clearable="false"
-                      :append-to-body="true"
                       class="q-mb-md"
                       multiple
                       filter="searchText"
@@ -115,7 +113,6 @@
                     </p>
                     <tree-select
                       :clearable="false"
-                      :append-to-body="true"
                       class="q-mb-md"
                       :options="provincesOptions"
                       value-consists-of="BRANCH_PRIORITY"
@@ -131,7 +128,6 @@
                     </p>
                     <tree-select
                       :clearable="false"
-                      :append-to-body="true"
                       class="q-mb-md"
                       :options="cityOptions"
                       value-consists-of="BRANCH_PRIORITY"
@@ -147,7 +143,6 @@
                     </p>
                     <tree-select
                       :clearable="false"
-                      :append-to-body="true"
                       class="q-mb-md"
                       :options="neighborhoodOptions"
                       value-consists-of="BRANCH_PRIORITY"
@@ -169,7 +164,6 @@
                     </p>
                     <tree-select
                       :clearable="false"
-                      :append-to-body="true"
                       class="q-mb-md"
                       :options="agesOptions"
                       value-consists-of="BRANCH_PRIORITY"
