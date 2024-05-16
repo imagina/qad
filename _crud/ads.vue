@@ -34,7 +34,7 @@ export default {
             {name: 'name', label: this.$tr('isite.cms.form.name'), field: 'title', align: 'left'},
             {
               name: 'user', label: this.$tr('iad.cms.form.user'), field: 'user', align: 'left',
-              format: val => (val && val.fullName) ? val.fullName : ''
+              format: val => val ? `${val.firstName || ''} ${val.lastName || ''}` : '-'
             },
             {
               name: 'featured', label: this.$tr('isite.cms.label.featured'), field: 'featured', align: 'left',
