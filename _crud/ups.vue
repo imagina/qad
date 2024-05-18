@@ -82,8 +82,9 @@ export default {
           daysLimit: {
             value: null,
             type: 'input',
+            required: true,
             props: {
-              label: this.$tr('iad.cms.form.daysLimit'),
+              label: this.$tr('iad.cms.form.daysLimit') + '*',
               type: 'number',
               rules: [val => !val || (val >= 1) || this.$tr('isite.cms.message.fieldMinValue', { num: 1 })]
             }
