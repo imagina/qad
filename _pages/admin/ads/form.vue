@@ -706,8 +706,7 @@ export default {
       //Get required data to form
       await Promise.all([
         this.getCategories(refresh),
-        this.getExtraFields(refresh),
-        this.getRequestForCheckData(refresh)
+        this.getExtraFields(refresh)
       ])
       //Get ad data
       await this.getAdData(refresh)
@@ -755,30 +754,6 @@ export default {
         })
       })
     },
-    //Get ad request data
-    getRequestForCheckData() {
-      return new Promise(resolve => {
-        if (!this.adId) return resolve(true)
-        //Request Params
-        let requestParams = {
-          refresh: true,
-          params: {
-            include: 'status',
-            filter: {
-              field: 'requestable_id',
-              ...this.requestable.config
-            }
-          }
-        }
-        //Request
-        this.$crud.show('apiRoutes.qrequestable.requestables', this.adId, requestParams).then(response => {
-          this.requestable.data = this.$clone(response.data)
-          resolve(response.data)
-        }).catch(error => {
-          resolve(false)
-        })
-      })
-    },
     //Get ad data
     getAdData() {
       return new Promise(resolve => {
@@ -787,7 +762,7 @@ export default {
         let requestParams = {
           refresh: true,
           params: {
-            include: 'fields,categories,adUps',
+            include: 'fields,categories,adUps,requestable.status',
             filter: {allTranslations: true}
           }
         }
@@ -820,6 +795,8 @@ export default {
             this.locale.form.lat = this.form.options.map.lat
             this.locale.form.lng = this.form.options.map.lng
           }
+          //Set requestable data
+          if(response.data.requestable) this.requestable.data = response.data.requestable
           resolve(response.data)
         }).catch(error => {
           resolve(false)
@@ -992,7 +969,7 @@ export default {
         //request
         this.$crud.create('apiRoutes.qrequestable.requestables', requestData).then(async response => {
           this.$alert.success({message: `${this.$tr('isite.cms.message.recordCreated')}`})
-          await this.getRequestForCheckData()
+          await this.getAdData()
           this.loading = false
         }).catch(error => {
           this.$alert.error({message: `${this.$tr('isite.cms.message.recordNoCreated')}`})
