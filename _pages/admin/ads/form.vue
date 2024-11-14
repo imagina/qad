@@ -10,49 +10,53 @@
                 @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))">
           <!--Page Actions-->
           <div class="box box-auto-height q-mb-md">
-            <page-actions :title="$tr($route.meta.title)"/>
+            <page-actions :title="$tr($route.meta.title)" />
           </div>
           <!--Language-->
           <div v-show="locale.fieldsTranslatable && Object.keys(locale.fieldsTranslatable).length" class="q-mb-md">
-            <locales v-model="locale" ref="localeComponent" :form="$refs.formContent"/>
+            <locales v-model="locale" ref="localeComponent" :form="$refs.formContent" />
           </div>
           <!--Main Fields-->
           <div class="box q-mb-md">
             <!--Title-->
             <div class="text-blue-grey text-weight-bold text-subtitle1 row items-center">
-              <q-icon name="fas fa-bullhorn" class="q-mr-sm"/>
+              <q-icon name="fas fa-bullhorn" class="q-mr-sm" />
               {{ $trp('iad.cms.form.newAd') }}
               <label v-if="showIdInForm" class="q-ml-sm">#{{ adId }}</label>
             </div>
-            <q-separator class="q-mt-sm q-mb-md"/>
+            <q-separator class="q-mt-sm q-mb-md" />
             <!--Fields-->
             <div v-if="locale.success">
               <dynamic-field v-for="(field, keyField) in formFields.main" :key="keyField" :field="field"
                              v-model="locale.formTemplate[field.name || keyField]" :language="locale.language"
-                             @update:modelValue="handlerInputChange((field.name || keyField))"/>
+                             @update:modelValue="handlerInputChange((field.name || keyField))" />
             </div>
           </div>
           <!--Extra Fields-->
           <div class="box q-mb-md" v-if="extraFields">
-            <dynamic-field v-for="(field, keyField) in extraFields" :key="keyField" :field="field"
-                           v-model="form[field.fakeFieldName || 'options'][field.name || keyField]"/>
+            <template v-for="(field, keyField) in extraFields" :key="keyField">
+              <dynamic-field v-if="field?.isFakeField || field.fakeFieldName" :field="field"
+                             v-model="form[field.fakeFieldName || 'options'][field.name || keyField]" />
+              <dynamic-field v-else :field="field"
+                             v-model="form[field.name || keyField]" />
+            </template>
           </div>
           <!--Check Ad Status-->
           <div v-if="checkStatusBanner" rounded dense class="box box-auto-height q-mb-md">
             <!--Title-->
             <div class="text-blue-grey text-weight-bold text-subtitle1 row items-center">
-              <q-icon name="fas fa-check-double" class="q-mr-sm"/>
+              <q-icon name="fas fa-check-double" class="q-mr-sm" />
               {{ $tr('isite.cms.label.checked') }}
             </div>
-            <q-separator class="q-mt-sm q-mb-md"/>
+            <q-separator class="q-mt-sm q-mb-md" />
             <!--Icon-->
-            <q-icon :name="checkStatusBanner.icon" :color="checkStatusBanner.color" size="20px" class="q-mr-sm"/>
+            <q-icon :name="checkStatusBanner.icon" :color="checkStatusBanner.color" size="20px" class="q-mr-sm" />
             <!--Message-->
             <label class="text-blue-grey">{{ checkStatusBanner.message }}</label>
             <!--Actions-->
             <div v-if="checkStatusBanner.action" class="text-right q-mt-md">
               <q-btn unelevated rounded :color="checkStatusBanner.action.color"
-                     :label="checkStatusBanner.action.label" @click="checkStatusBanner.action.action"/>
+                     :label="checkStatusBanner.action.label" @click="checkStatusBanner.action.action" />
             </div>
           </div>
           <!--Locations-->
@@ -61,7 +65,7 @@
                             header-class="header-container" group="fromAdExpansion">
             <div class="q-pa-md" v-if="locale.success">
               <dynamic-field v-for="(field, keyField) in formFields.location" :key="keyField" :field="field"
-                             v-model="locale.formTemplate[field.name || keyField]"/>
+                             v-model="locale.formTemplate[field.name || keyField]" />
             </div>
           </q-expansion-item>
           <!--Categories-->
@@ -94,7 +98,7 @@
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.schedule" :key="keyField"
                              :field="field" v-model="form.options[field.name || keyField]"
-                             @converted="value => form.schedule = value"/>
+                             @converted="value => form.schedule = value" />
             </div>
           </q-expansion-item>
           <!--Contact-->
@@ -103,7 +107,7 @@
                             header-class="header-container" expand-separator group="fromAdExpansion">
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.contact" :key="keyField" :field="field"
-                             v-model="form.options[field.name || keyField]"/>
+                             v-model="form.options[field.name || keyField]" />
             </div>
           </q-expansion-item>
           <!--Media-->
@@ -112,7 +116,7 @@
                             :label="$trp('iad.cms.form.photosAndVideo')">
             <div class="q-pa-md">
               <dynamic-field v-for="(field, keyField) in formFields.media" :key="keyField" :field="field"
-                             v-model="form[field.name || keyField]" :item-id="adId"/>
+                             v-model="form[field.name || keyField]" :item-id="adId" />
             </div>
           </q-expansion-item>
           <!--Prices-->
@@ -122,17 +126,17 @@
             <div class="q-pa-md row q-col-gutter-x-sm">
               <!--Help text-->
               <div class="row items-center text-grey-7 q-mb-md full-width">
-                <q-icon class="q-mr-sm" name="fas fa-magic"/>
+                <q-icon class="q-mr-sm" name="fas fa-magic" />
                 {{ $tr('iad.cms.message.chooseDefaultPrice') }}
               </div>
               <!--Fields-->
               <dynamic-field v-for="(field, keyField) in pricesFields" :key="keyField" class="col-4"
                              :field="field" v-model="form.prices[field.name]"
-                             @update:modelValue="val => changeDefaultPrice(field.name, val)"/>
+                             @update:modelValue="val => changeDefaultPrice(field.name, val)" />
               <!--Actions-->
               <div class="col-12 text-right">
                 <q-btn @click="setPricesFields()" :label="$tr('isite.cms.label.add')" color="green" rounded unelevated
-                       size="10px"/>
+                       size="10px" />
               </div>
             </div>
           </q-expansion-item>
@@ -153,7 +157,7 @@
                     <q-item-section>
                       <!--Ups-->
                       <q-item-label>
-                        <q-icon name="fas fa-arrow-alt-circle-up" class="q-mr-sm" color="blue-grey"/>
+                        <q-icon name="fas fa-arrow-alt-circle-up" class="q-mr-sm" color="blue-grey" />
                         <label class="text-caption text-blue-grey">{{ $tr('iad.cms.form.upsDaily') }}</label>
                         {{ up.upsCounter }}/{{ up.upsDaily }},
                         <label class="text-caption text-blue-grey">{{ $tr('iad.cms.form.daysLimit') }}</label>
@@ -161,15 +165,15 @@
                       </q-item-label>
                       <!--Time-->
                       <q-item-label>
-                        <q-icon name="fas fa-clock" class="q-mr-sm" color="blue-grey"/>
+                        <q-icon name="fas fa-clock" class="q-mr-sm" color="blue-grey" />
                         <label class="text-caption text-blue-grey">{{ $tr('isite.cms.label.since') }}</label>
-                        {{ $trd(`${up.fromDate} ${up.fromHour}`, {type: 'time'}) }}
+                        {{ $trd(`${up.fromDate} ${up.fromHour}`, { type: 'time' }) }}
                         <label class="text-caption text-blue-grey">{{ $tr('isite.cms.label.until') }}</label>
-                        {{ $trd(`${up.toDate} ${up.toHour}`, {type: 'time'}) }}
+                        {{ $trd(`${up.toDate} ${up.toHour}`, { type: 'time' }) }}
                       </q-item-label>
                       <!--Date-->
                       <q-item-label>
-                        <q-icon name="fas fa-calendar" class="q-mr-sm" color="blue-grey"/>
+                        <q-icon name="fas fa-calendar" class="q-mr-sm" color="blue-grey" />
                         <label class="text-caption text-blue-grey">{{ $tr('isite.cms.label.since') }}</label>
                         {{ $trd(up.fromDate) }}
                         <label class="text-caption text-blue-grey">{{ $tr('isite.cms.label.until') }}</label>
@@ -183,34 +187,35 @@
               <div class=" col-12 text-right">
                 <q-btn :label="$tr('isite.cms.label.pay')" color="green" rounded unelevated size="10px"
                        icon="fas fa-rocket"
-                       @click="$helper.openExternalURL(`${$store.state.qsiteApp.baseUrl}/pins/${adInfo.slug}/buy-up`, true)"/>
+                       @click="$helper.openExternalURL(`${$store.state.qsiteApp.baseUrl}/pins/${adInfo.slug}/buy-up`, true)" />
               </div>
             </div>
           </q-expansion-item>
         </q-form>
         <!--Action-->
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
-          <q-btn :label="$tr('isite.cms.label.save')" color="green" unelevated rounded @click="$refs.formAd.submit()"/>
+          <q-btn :label="$tr('isite.cms.label.save')" color="green" unelevated rounded @click="$refs.formAd.submit()" />
         </q-page-sticky>
       </div>
       <!--Inner loading-->
-      <inner-loading :visible="loading"/>
+      <inner-loading :visible="loading" />
     </div>
   </div>
 </template>
 <script>
-import { eventBus } from 'src/plugins/utils'
+import { eventBus } from 'src/plugins/utils';
+
 export default {
   beforeUnmount() {
-    eventBus.off('page.data.refresh')
+    eventBus.off('page.data.refresh');
   },
   props: {},
   components: {},
   watch: {},
   mounted() {
-    this.$nextTick(function () {
-      this.init()
-    })
+    this.$nextTick(function() {
+      this.init();
+    });
   },
   data() {
     return {
@@ -227,7 +232,7 @@ export default {
         options: {},
         prices: {},
         mediasMulti: {},
-        mediasSingle: {},
+        mediasSingle: {}
       },
       locale: {
         form: {},
@@ -245,28 +250,28 @@ export default {
           lng: null,
           map: null,
           terms: 0,
-          createdFromIp: this.$store.state.qsiteApp.ipAddress,
+          createdFromIp: this.$store.state.qsiteApp.ipAddress
         },
         fieldsTranslatable: {
           title: null,
           slug: null,
-          description: null,
+          description: null
         }
       },
       requestable: {
         data: null,
         config: {
-          type: "requestCheckAd",
-          requestable_type: "Modules\\Iad\\Entities\\Ad"
+          type: 'requestCheckAd',
+          requestable_type: 'Modules\\Iad\\Entities\\Ad'
         }
       },
       tmpMainCategories: {}
-    }
+    };
   },
   computed: {
     //show id
     showIdInForm() {
-      return (config('app.mode') == 'iadmin') && this.adId
+      return (config('app.mode') == 'iadmin') && this.adId;
     },
     //Form fields
     formFields() {
@@ -280,8 +285,8 @@ export default {
               label: `${this.$tr('isite.cms.form.title')}*`,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            },
+              ]
+            }
           },
           slug: {
             value: '',
@@ -292,8 +297,8 @@ export default {
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            },
+              ]
+            }
           },
           description: {
             value: '',
@@ -302,12 +307,12 @@ export default {
             props: {
               label: `${this.$tr('isite.cms.form.description')}*`,
               type: 'textarea',
-              rows: "5",
+              rows: '5',
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
 
-            },
+            }
           },
           userId: {
             value: null,
@@ -318,11 +323,11 @@ export default {
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
             },
             loadOptions: {
               apiRoute: 'apiRoutes.quser.users',
-              select: {label: 'fullName', id: 'id'}
+              select: { label: 'fullName', id: 'id' }
             }
           },
           status: {
@@ -333,11 +338,11 @@ export default {
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qad.adStatus',
-              select: {label: 'name', id: 'id'}
+              select: { label: 'name', id: 'id' }
             }
           },
           sortOrder: {
@@ -354,7 +359,7 @@ export default {
             isFakeField: true,
             value: this.$store.state.qsiteApp.ipAddress,
             props: {
-              vIf: config('app.mode') == "iadmin" ? true : false,
+              vIf: config('app.mode') == 'iadmin' ? true : false,
               readonly: true,
               label: `${this.$tr('isite.cms.form.createdFromIp')}`
             }
@@ -366,7 +371,7 @@ export default {
               label: `${this.$tr('isite.cms.label.featured')}`,
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               trueValue: 1,
-              falseValue: 0,
+              falseValue: 0
             }
           },
           checked: {
@@ -376,10 +381,10 @@ export default {
               label: `${this.$tr('iad.cms.sidebar.checked')}`,
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               trueValue: '1',
-              falseValue: '0',
+              falseValue: '0'
             }
           },
-          ...(this.termsAndConditions ? {terms: this.termsAndConditions} : {})
+          ...(this.termsAndConditions ? { terms: this.termsAndConditions } : {})
         },
         location: {
           countryId: {
@@ -389,11 +394,11 @@ export default {
               label: this.$tr('isite.cms.label.country') + '*',
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qlocations.countries',
-              select: {label: 'name', id: 'id'},
+              select: { label: 'name', id: 'id' }
             }
           },
           provinceId: {
@@ -404,12 +409,12 @@ export default {
               readonly: (this.locale.form.countryId ? false : true),
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
             },
             loadOptions: {
               apiRoute: this.locale.form.countryId ? 'apiRoutes.qlocations.provinces' : false,
-              select: {label: 'name', id: 'id'},
-              requestParams: {filter: {country: this.locale.form.countryId}}
+              select: { label: 'name', id: 'id' },
+              requestParams: { filter: { country: this.locale.form.countryId } }
             }
           },
           cityId: {
@@ -420,12 +425,12 @@ export default {
               readonly: (this.locale.form.provinceId ? false : true),
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
             },
             loadOptions: {
               apiRoute: this.locale.form.provinceId ? 'apiRoutes.qlocations.cities' : false,
-              select: {label: 'name', id: 'id'},
-              requestParams: {filter: {province_id: this.locale.form.provinceId}}
+              select: { label: 'name', id: 'id' },
+              requestParams: { filter: { province_id: this.locale.form.provinceId } }
             }
           },
           neighborhoodId: {
@@ -437,8 +442,8 @@ export default {
             },
             loadOptions: {
               apiRoute: this.locale.form.provinceId ? 'apiRoutes.qlocations.neighborhoods' : false,
-              select: {label: 'name', id: 'id'},
-              requestParams: {filter: {cityId: this.locale.form.cityId}}
+              select: { label: 'name', id: 'id' },
+              requestParams: { filter: { cityId: this.locale.form.cityId } }
             }
           },
           map: {
@@ -456,8 +461,8 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.status'),
               options: [
-                {label: this.$tr('isite.cms.label.enabled'), value: '1'},
-                {label: this.$tr('isite.cms.label.disabled'), value: '0'}
+                { label: this.$tr('isite.cms.label.enabled'), value: '1' },
+                { label: this.$tr('isite.cms.label.disabled'), value: '0' }
               ]
             }
           },
@@ -495,7 +500,7 @@ export default {
             props: {
               vIf: this.settings.contactFields.includes('facebook'),
               label: 'Facebook',
-              clearable: true,
+              clearable: true
             }
           },
           instagram: {
@@ -533,7 +538,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.label.mainImage'),
               zone: 'mainimage',
-              entity: "Modules\\Iad\\Entities\\Ad",
+              entity: 'Modules\\Iad\\Entities\\Ad',
               entityId: null,
               accept: 'images',
               directUpload: this.settings.selectFromMedia ? false : true
@@ -546,7 +551,7 @@ export default {
             props: {
               label: `${this.$tr('isite.cms.form.gallery')} (${this.$trp('isite.cms.label.image')})`,
               zone: 'gallery',
-              entity: "Modules\\Iad\\Entities\\Ad",
+              entity: 'Modules\\Iad\\Entities\\Ad',
               entityId: null,
               multiple: true,
               accept: 'images',
@@ -560,7 +565,7 @@ export default {
             props: {
               label: `Videos`,
               zone: 'videos',
-              entity: "Modules\\Iad\\Entities\\Ad",
+              entity: 'Modules\\Iad\\Entities\\Ad',
               entityId: null,
               multiple: true,
               maxFiles: 3,
@@ -575,19 +580,19 @@ export default {
           props: {
             label: `${this.$tr('isite.cms.label.search')}...`
           }
-        },
-      }
+        }
+      };
     },
     //Ups data
     adUps() {
       //Default response
-      let response = []
+      let response = [];
       //Parse ad ups
       this.adInfo.adUps.forEach(up => {
-        if (up.status) response.push(up)
-      })
+        if (up.status) response.push(up);
+      });
       //Response
-      return response
+      return response;
     },
     //Get settings
     settings() {
@@ -597,22 +602,22 @@ export default {
         contactFields: this.$getSetting('iad::contactFields') || [],
         selectFromMedia: parseInt(this.$getSetting('iad::selectFromMedia') || '0'),
         allowRequestForChecked: parseInt(this.$getSetting('iad::allowRequestForChecked') || 0)
-      }
+      };
     },
     //Termns and conditions
     termsAndConditions() {
-      if (config('app.mode') != 'ipanel') return false
-      let settings = this.settings
+      if (config('app.mode') != 'ipanel') return false;
+      let settings = this.settings;
 
       //Validate settin data
-      if (!settings.politics && !settings.terms) return false
+      if (!settings.politics && !settings.terms) return false;
 
       //Add links to terms and conditions
-      let concatData = ''
+      let concatData = '';
       if (settings.politics)
-        concatData += `<a href="${settings.politics}" target="_blank" class="text-green"><b>${this.$tr('iprofile.cms.message.privacyPolicy')}</b></a>,`
+        concatData += `<a href="${settings.politics}" target="_blank" class="text-green"><b>${this.$tr('iprofile.cms.message.privacyPolicy')}</b></a>,`;
       if (settings.terms)
-        concatData += `<a href="${settings.terms}" target="_blank" class="text-green"><b>${this.$tr('iprofile.cms.message.termsAndConditions')}</b></a>,`
+        concatData += `<a href="${settings.terms}" target="_blank" class="text-green"><b>${this.$tr('iprofile.cms.message.termsAndConditions')}</b></a>,`;
 
       //Default response
       let response = {
@@ -624,17 +629,17 @@ export default {
           label: this.$tr('iprofile.cms.message.privacyData', {
             concatData: concatData,
             siteName: this.$getSetting('core::site-name')
-          }),
+          })
         }
-      }
+      };
 
       //Response
-      return response
+      return response;
     },
     //Strusture to check status
     checkStatusBanner() {
       //Validate
-      if (!this.adInfo || !this.settings.allowRequestForChecked) return false
+      if (!this.adInfo || !this.settings.allowRequestForChecked) return false;
 
       //instance banner config
       let configs = {
@@ -667,15 +672,15 @@ export default {
           icon: 'far fa-times-circle',
           message: `${this.$tr('iad.cms.adCheck.rejected')}...`
         }
-      }
+      };
 
       //Instance config value, checking first if ad is checked else if exist request and return request status
-      let checked = parseInt(this.adInfo.checked || 0)
-      let requestedStatus = this.requestable.data ? this.requestable.data.status.value : null
-      requestedStatus = requestedStatus ? (requestedStatus == 4 ? 'rejected' : 'requested') : 'noRequested'
+      let checked = parseInt(this.adInfo.checked || 0);
+      let requestedStatus = this.requestable.data ? this.requestable.data.status.value : null;
+      requestedStatus = requestedStatus ? (requestedStatus == 4 ? 'rejected' : 'requested') : 'noRequested';
 
       //Response
-      return configs[checked ? 'checked' : requestedStatus]
+      return configs[checked ? 'checked' : requestedStatus];
     }
   },
   methods: {
@@ -683,34 +688,34 @@ export default {
       await Promise.all([
         this.getData(),//Get data
         this.$hook.dispatchEvent(
-            (this.adId ? 'isUpdating' : 'isCreating'),
-            {entityName: config('main.qad.entityNames.ad')}
+          (this.adId ? 'isUpdating' : 'isCreating'),
+          { entityName: config('main.qad.entityNames.ad') }
         )
-      ])
+      ]);
       //Set first price inputs
-      let pricesValues = Object.keys(this.form.prices).length
-      this.setPricesFields(pricesValues ? (pricesValues / 2) : 1)
+      let pricesValues = Object.keys(this.form.prices).length;
+      this.setPricesFields(pricesValues ? (pricesValues / 2) : 1);
       //Listen refresh page
       eventBus.on('page.data.refresh', () => {
-        this.pageId = this.$uid()
-        this.getData(true)
-      })
+        this.pageId = this.$uid();
+        this.getData(true);
+      });
       //Set tmpCategories
       this.categories.forEach(item => {
-        this.tmpMainCategories[item.id] = this.form.categories.includes(item.id)
-      })
+        this.tmpMainCategories[item.id] = this.form.categories.includes(item.id);
+      });
     },
     //Get data
     async getData(refresh = false) {
-      this.loading = true
+      this.loading = true;
       //Get required data to form
       await Promise.all([
         this.getCategories(refresh),
         this.getExtraFields(refresh)
-      ])
+      ]);
       //Get ad data
-      await this.getAdData(refresh)
-      this.loading = false
+      await this.getAdData(refresh);
+      this.loading = false;
     },
     //Get Categories
     getCategories(refresh = false) {
@@ -718,17 +723,17 @@ export default {
         //Request params
         let requestParams = {
           refresh: refresh
-        }
+        };
         //Request
         this.$crud.index('apiRoutes.qad.categories', requestParams).then(response => {
-          this.categories = this.$array.builTree(response.data)
-          resolve(response.data)
+          this.categories = this.$array.builTree(response.data);
+          resolve(response.data);
         }).catch(error => {
           this.$apiResponse.handleError(error, () => {
-            resolve(false)
-          })
-        })
-      })
+            resolve(false);
+          });
+        });
+      });
     },
     //Get extra fields
     getExtraFields(refresh = false) {
@@ -736,36 +741,36 @@ export default {
         //Request params
         let requestParams = {
           refresh: refresh,
-          params: {filter: {configName: 'Iad.crud-fields.ads'}}
-        }
+          params: { filter: { configName: 'Iad.crud-fields.ads' } }
+        };
         //Request
         this.$crud.index('apiRoutes.qsite.configs', requestParams).then(response => {
-          if (response.data) this.extraFields = response.data
+          if (response.data) this.extraFields = response.data;
           //Set fake fields
           Object.values(response.data).forEach(field => {
-            if (field.fakeFieldName) this.form[field.fakeFieldName] = {}
-          })
+            if (field.fakeFieldName) this.form[field.fakeFieldName] = {};
+          });
           //Resolve
-          resolve(response.data)
+          resolve(response.data);
         }).catch(error => {
           this.$apiResponse.handleError(error, () => {
-            resolve(false)
-          })
-        })
-      })
+            resolve(false);
+          });
+        });
+      });
     },
     //Get ad data
     getAdData() {
       return new Promise(resolve => {
-        if (!this.adId) return resolve(true)
+        if (!this.adId) return resolve(true);
         //Request Params
         let requestParams = {
           refresh: true,
           params: {
             include: 'fields,categories,adUps,requestable.status',
-            filter: {allTranslations: true}
+            filter: { allTranslations: true }
           }
-        }
+        };
         //Request
         this.$crud.show('apiRoutes.qad.ads', this.adId, requestParams).then(response => {
           // this.locale.form = {...response.data, terms: 1}//Set locale data
@@ -773,39 +778,39 @@ export default {
             ...response.data,
             terms: 1,
             createdFromIp: response.data.options?.createdFromIp || this.$store.state.qsiteApp.ipAddress
-          } //set createdFromIp
+          }; //set createdFromIp
           //Save ad info
-          this.adInfo = response.data
+          this.adInfo = response.data;
           //Set fields data
-          if (response.data.fields) response.data.fields.map((item, key) => this.form.fields[item.name] = item.value)
+          if (response.data.fields) response.data.fields.map((item, key) => this.form.fields[item.name] = item.value);
           //Set options fields
-          if (response.data.options) this.form.options = response.data.options
+          if (response.data.options) this.form.options = response.data.options;
           //Set categories
-          if (response.data.categories) this.form.categories = response.data.categories.map(item => item.id)
+          if (response.data.categories) this.form.categories = response.data.categories.map(item => item.id);
           //Set prices
           if (response.data.options.prices) {
             response.data.options.prices.map((item, key) => {
-              this.form.prices[`description${key}`] = item.description
-              this.form.prices[`price${key}`] = item.value
-              this.form.prices[`default${key}`] = item.default
-            })
+              this.form.prices[`description${key}`] = item.description;
+              this.form.prices[`price${key}`] = item.value;
+              this.form.prices[`default${key}`] = item.default;
+            });
           }
           if (response.data.options.map) {
-            this.locale.form.map = this.form.options.map
-            this.locale.form.lat = this.form.options.map.lat
-            this.locale.form.lng = this.form.options.map.lng
+            this.locale.form.map = this.form.options.map;
+            this.locale.form.lat = this.form.options.map.lat;
+            this.locale.form.lng = this.form.options.map.lng;
           }
           //Set requestable data
-          if(response.data.requestable) this.requestable.data = response.data.requestable
-          resolve(response.data)
+          if (response.data.requestable) this.requestable.data = response.data.requestable;
+          resolve(response.data);
         }).catch(error => {
-          resolve(false)
-        })
-      })
+          resolve(false);
+        });
+      });
     },
     //Set prices fields
     setPricesFields(quantity = 1) {
-      let fieldNum = this.pricesFields.length ? this.pricesFields.length / 2 : 0
+      let fieldNum = this.pricesFields.length ? this.pricesFields.length / 2 : 0;
 
       for (var i = 0; i < quantity; i++) {
         this.pricesFields = [...this.pricesFields,
@@ -824,7 +829,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.label.price'),
               type: 'number',
-              rules: [val => !val || (val >= 10) || this.$tr('isite.cms.message.fieldMinValue', {num: 10})]
+              rules: [val => !val || (val >= 10) || this.$tr('isite.cms.message.fieldMinValue', { num: 10 })]
             }
           },
           {
@@ -835,70 +840,70 @@ export default {
               label: this.$tr('iad.cms.form.featuredRate'),
               useInput: false,
               options: [
-                {label: this.$tr('isite.cms.label.yes'), value: '1'},
-                {label: this.$tr('isite.cms.label.no'), value: '0'}
+                { label: this.$tr('isite.cms.label.yes'), value: '1' },
+                { label: this.$tr('isite.cms.label.no'), value: '0' }
               ]
             }
-          },
-        ]
+          }
+        ];
       }
     },
     //Toggle select category
     toggleSelectCategory(category) {
-      let index = this.form.categories.findIndex(item => item == category.id)//Search item in array
-      if (index == -1) this.form.categories.push(category.id)//Add item
-      else this.form.categories.splice(index, 1)//Remove item
+      let index = this.form.categories.findIndex(item => item == category.id);//Search item in array
+      if (index == -1) this.form.categories.push(category.id);//Add item
+      else this.form.categories.splice(index, 1);//Remove item
     },
     //Listen input change
     handlerInputChange(fieldName) {
       switch (fieldName) {
         case 'title':
           if (!this.adId)
-            this.locale.formTemplate.slug = this.$helper.getSlug(this.locale.formTemplate.title)
-          break
+            this.locale.formTemplate.slug = this.$helper.getSlug(this.locale.formTemplate.title);
+          break;
       }
     },
     //Get form data
     getFormData() {
-      let formLocale = this.$clone(this.locale.form)
-      let formData = this.$clone(this.form)
+      let formLocale = this.$clone(this.locale.form);
+      let formData = this.$clone(this.form);
 
       //Transform prices
-      let pricesData = []
-      let adMinPrice = 0
-      let adMaxPrice = 0
+      let pricesData = [];
+      let adMinPrice = 0;
+      let adMaxPrice = 0;
       if (Object.keys(formData.prices || {}).length) {
         for (var i = 0; i < (Object.keys(formData.prices).length / 2); i++) {
-          let itemPrice = parseInt(formData.prices[`price${i}`])
+          let itemPrice = parseInt(formData.prices[`price${i}`]);
 
           if (formData.prices[`description${i}`] && formData.prices[`price${i}`]) {
             //Add to prices date
             pricesData.push({
               description: formData.prices[`description${i}`],
               value: itemPrice,
-              default: formData.prices[`default${i}`],
-            })
+              default: formData.prices[`default${i}`]
+            });
             //Validate if is min price
-            if ((adMinPrice == 0) || (itemPrice < adMinPrice)) adMinPrice = itemPrice
+            if ((adMinPrice == 0) || (itemPrice < adMinPrice)) adMinPrice = itemPrice;
             //Validate if is max price
-            if (itemPrice > adMaxPrice) adMaxPrice = itemPrice
+            if (itemPrice > adMaxPrice) adMaxPrice = itemPrice;
           }
         }
       }
 
       //Transform fields
-      let fieldsData = []
+      let fieldsData = [];
       if (Object.keys(formData.fields || {}).length) {
         for (var itemName in formData.fields)
-          fieldsData.push({name: itemName, value: formData.fields[itemName]})
+          fieldsData.push({ name: itemName, value: formData.fields[itemName] });
       }
       //Response
-      const {createdFromIp, ...rest} = formLocale
+      const { createdFromIp, ...rest } = formLocale;
 
       const mapInfo = {
         lat: formLocale.map ? formLocale.map?.lat ?? '' : '',
-        lng: formLocale.map ? formLocale.map?.lng  ?? '' : ''
-      }
+        lng: formLocale.map ? formLocale.map?.lng ?? '' : ''
+      };
 
       return {
         ...rest,
@@ -917,68 +922,68 @@ export default {
         mediasSingle: formData.mediasSingle,
         mediasMulti: formData.mediasMulti,
         schedule: formData.schedule
-      }
+      };
     },
     //Create Ad
     createItem() {
       return new Promise(resolve => {
-        this.loading = true
+        this.loading = true;
         this.$crud.create('apiRoutes.qad.ads', this.getFormData()).then(response => {
-          this.$alert.info({message: `${this.$tr('isite.cms.message.recordCreated')}`})
-          this.$hook.dispatchEvent('wasCreated', {entityName: config('main.qad.entityNames.ad')})
-          this.loading = false
-          this.$router.push({name: 'qad.ads.index'})
+          this.$alert.info({ message: `${this.$tr('isite.cms.message.recordCreated')}` });
+          this.$hook.dispatchEvent('wasCreated', { entityName: config('main.qad.entityNames.ad') });
+          this.loading = false;
+          this.$router.push({ name: 'qad.ads.index' });
         }).catch(error => {
-          this.$alert.error({message: `${this.$tr('isite.cms.message.recordNoCreated')}`})
-          this.loading = false
-        })
-      })
+          this.$alert.error({ message: `${this.$tr('isite.cms.message.recordNoCreated')}` });
+          this.loading = false;
+        });
+      });
     },
     //Update Ad
     updateItem() {
       return new Promise(resolve => {
-        this.loading = true
-        let requestData = {...this.getFormData(), id : this.adId}
+        this.loading = true;
+        let requestData = { ...this.getFormData(), id: this.adId };
         this.$crud.update('apiRoutes.qad.ads', this.adId, requestData).then(response => {
-          this.$alert.info({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
-          this.$hook.dispatchEvent('wasUpdated', {entityName: config('main.qad.entityNames.ad')})
-          this.loading = false
-          this.$router.push({name: 'qad.ads.index'})
+          this.$alert.info({ message: `${this.$tr('isite.cms.message.recordUpdated')}` });
+          this.$hook.dispatchEvent('wasUpdated', { entityName: config('main.qad.entityNames.ad') });
+          this.loading = false;
+          this.$router.push({ name: 'qad.ads.index' });
         }).catch(error => {
-          this.$alert.error({message: `${this.$tr('isite.cms.message.recordNoUpdated')}`})
-          this.loading = false
-        })
-      })
+          this.$alert.error({ message: `${this.$tr('isite.cms.message.recordNoUpdated')}` });
+          this.loading = false;
+        });
+      });
     },
     //change defualt price
     changeDefaultPrice(fieldName, val) {
       if (fieldName.includes('default') && parseInt(val)) {
         Object.keys(this.form.prices).forEach(name => {
           if (name.includes('default') && (name != fieldName)) {
-            this.form.prices[name] = '0'
+            this.form.prices[name] = '0';
           }
-        })
+        });
       }
     },
     //create requestable
     createRequestable() {
       return new Promise(resolve => {
-        this.loading = true
+        this.loading = true;
         //request data
-        let requestData = {...this.requestable.config, requestableId: this.adId}
+        let requestData = { ...this.requestable.config, requestableId: this.adId };
         //request
         this.$crud.create('apiRoutes.qrequestable.requestables', requestData).then(async response => {
-          this.$alert.success({message: `${this.$tr('isite.cms.message.recordCreated')}`})
-          await this.getAdData()
-          this.loading = false
+          this.$alert.success({ message: `${this.$tr('isite.cms.message.recordCreated')}` });
+          await this.getAdData();
+          this.loading = false;
         }).catch(error => {
-          this.$alert.error({message: `${this.$tr('isite.cms.message.recordNoCreated')}`})
-          this.loading = false
-        })
-      })
+          this.$alert.error({ message: `${this.$tr('isite.cms.message.recordNoCreated')}` });
+          this.loading = false;
+        });
+      });
     }
   }
-}
+};
 </script>
 <style lang="scss">
 #contentAdFormPage {
