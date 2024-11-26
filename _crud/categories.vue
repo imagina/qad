@@ -55,7 +55,7 @@ export default {
         },
         update: {
           title: this.$tr('iblog.cms.updateCategory'),
-          requestParams: {include: 'parent'}
+          requestParams: {include: 'parent,buildable'}
         },
         delete: true,
         formLeft: {
@@ -92,6 +92,40 @@ export default {
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
+            }
+          },
+          type: {
+            value: 'general',
+            type: 'select',
+            name: 'type',
+            fakeFieldName: 'buildable',
+            props: {
+              label: this.$tr('isite.cms.form.type'),
+              readonly: !!(!this.$hasAccess('ibuilder.buildables.edit') && this.crudInfo.typeForm == 'update'),
+              options: [
+                {label: 'General', value: 'general'},
+                ...this.typeOptions
+              ]
+            }
+          },
+          layoutBuilder: {
+            value: null,
+            type: 'select',
+            name: 'layoutId',
+            fakeFieldName: 'buildable',
+            props: {
+              label: this.$tr('ibuilder.cms.form.layout'),
+              clearable: true,
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qbuilder.layouts',
+              select: {label: 'title', id: 'id'},
+              requestParams: {
+                filter: {
+                  type: this.crudInfo.buildable?.type ?? '',
+                  entity_type: "Modules\\Iad\\Entities\\Category"
+                }
+              }
             }
           },
         },
@@ -149,6 +183,19 @@ export default {
     //Crud info
     crudInfo() {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
+    },
+    typeOptions() {
+      //configBuilder by module only with values
+      let config = this.$store.getters['qsiteApp/getConfigApp']('builder.layout', true)
+      let response = {}
+
+      //Filter only items with values
+      Object.keys(config).forEach(moduleName => {
+        if (config[moduleName]) response[moduleName] = config[moduleName]
+      })
+
+      let moduleBuilderConfig = Object.values(response).flat().find(item => item.entity.value == "Modules\\Iad\\Entities\\Category")
+      return moduleBuilderConfig?.types || []
     }
   },
 }
