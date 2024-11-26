@@ -238,6 +238,8 @@ export default {
         form: {},
         fields: {
           userId: this.$store.state.quserAuth.userId,
+          buildableLayoutId: null,
+          buildableType: null,
           countryId: null,
           provinceId: null,
           cityId: null,
@@ -382,6 +384,38 @@ export default {
               vIf: (config('app.mode') == 'iadmin') ? true : false,
               trueValue: '1',
               falseValue: '0'
+            }
+          },
+          buildableType: {
+            value: 'general',
+            type: 'select',
+            name: 'buildableType',
+            props: {
+              label: this.$tr('isite.cms.form.type'),
+              readonly: !!(!this.$hasAccess('ibuilder.buildables.edit')),
+              options: [
+                {label: 'General', value: 'general'},
+                ...this.typeOptions
+              ]
+            }
+          },
+          buildableLayoutId: {
+            value: null,
+            type: 'select',
+            name: 'buildableLayoutId',
+            props: {
+              label: this.$tr('ibuilder.cms.form.layout'),
+              clearable: true,
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qbuilder.layouts',
+              select: {label: 'title', id: 'id'},
+              requestParams: {
+                filter: {
+                  type: this.locale.formTemplate?.buildableType ?? '',
+                  entity_type: "Modules\\Iad\\Entities\\Ad"
+                }
+              }
             }
           },
           ...(this.termsAndConditions ? { terms: this.termsAndConditions } : {})
@@ -681,6 +715,19 @@ export default {
 
       //Response
       return configs[checked ? 'checked' : requestedStatus];
+    },
+    // Return the type options by entityType selected
+    typeOptions() {
+      //configBuilder by module only with values
+      let config = this.$store.getters['qsiteApp/getConfigApp']('builder.layout', true);
+      let response = {};
+
+      //Filter only items with values
+      Object.keys(config).forEach(moduleName => {
+        if (config[moduleName]) response[moduleName] = config[moduleName]
+      })
+      let moduleBuilderConfig = Object.values(response).flat().find(item => item.entity.value == "Modules\\Iad\\Entities\\Ad")
+      return this.$clone(moduleBuilderConfig?.types || [])
     }
   },
   methods: {
@@ -767,7 +814,7 @@ export default {
         let requestParams = {
           refresh: true,
           params: {
-            include: 'fields,categories,adUps,requestable.status',
+            include: 'fields,categories,adUps,requestable.status,buildable',
             filter: { allTranslations: true }
           }
         };
@@ -782,7 +829,7 @@ export default {
           //Save ad info
           this.adInfo = response.data;
           //Set fields data
-          if (response.data.fields) response.data.fields.map((item, key) => this.form.fields[item.name] = item.value);
+          if (response.data.fields) response.data.fields.forEach((item) => {this.locale.fields[item.name] = item.value});
           //Set options fields
           if (response.data.options) this.form.options = response.data.options;
           //Set categories
@@ -802,6 +849,10 @@ export default {
           }
           //Set requestable data
           if (response.data.requestable) this.requestable.data = response.data.requestable;
+          if (response.data.buildable) {
+            this.locale.form.buildableType = response.data.buildable.type
+            this.locale.form.buildableLayoutId = response.data.buildable.layoutId
+          }
           resolve(response.data);
         }).catch(error => {
           resolve(false);
@@ -905,6 +956,11 @@ export default {
         lng: formLocale.map ? formLocale.map?.lng ?? '' : ''
       };
 
+      const buildableType = rest.buildableType;
+      const buildableLayoutId = rest.buildableLayoutId;
+      delete rest.buildableType;
+      delete rest.buildableLayoutId;
+
       return {
         ...rest,
         categories: formData.categories,
@@ -915,6 +971,10 @@ export default {
           prices: pricesData,
           map: mapInfo,
           createdFromIp: createdFromIp
+        },
+        buildable: {
+          type: buildableType,
+          layoutId: buildableLayoutId
         },
         minPrice: adMinPrice,
         maxPrice: adMaxPrice,

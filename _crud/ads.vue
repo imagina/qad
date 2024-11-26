@@ -86,7 +86,7 @@ export default {
               color: 'info',
               tooltip: this.$tr('isite.cms.label.view'),
               action: (item) => {
-                this.$helper.openExternalURL(`${this.$store.state.qsiteApp.baseUrl}/anuncios/${item.slug}`, true)
+                this.$helper.openExternalURL(item.url, true)
               },
             },
             {
