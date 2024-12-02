@@ -35,9 +35,9 @@
           <!--Extra Fields-->
           <div class="box q-mb-md" v-if="extraFields">
             <template v-for="(field, keyField) in extraFields" :key="keyField">
-              <dynamic-field v-if="field?.isFakeField || field.fakeFieldName" :field="field"
+              <dynamic-field v-if="field?.isFakeField || field.fakeFieldName" :field="field" :item-id="adId"
                              v-model="form[field.fakeFieldName || 'options'][field.name || keyField]" />
-              <dynamic-field v-else :field="field"
+              <dynamic-field v-else :field="field" :item-id="adId"
                              v-model="form[field.name || keyField]" />
             </template>
           </div>
