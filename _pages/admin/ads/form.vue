@@ -61,11 +61,19 @@
           </div>
           <!--Locations-->
           <q-expansion-item icon="fas fa-map-marker-alt" :label="$trp('iad.cms.form.whereLocation')"
-                            class="box-collapse q-mb-md" default-opened
-                            header-class="header-container" group="fromAdExpansion">
+                            class="box-collapse q-mb-md"
+                            header-class="header-container" group="fromAdExpansion"
+                            v-model="expasionModel.location">
             <div class="q-pa-md" v-if="locale.success">
-              <dynamic-field v-for="(field, keyField) in formFields.location" :key="keyField" :field="field"
-                             v-model="locale.formTemplate[field.name || keyField]" />
+              <template v-for="(field, keyField) in formFields.location" :key="keyField">
+                <keep-alive>
+                  <dynamic-field
+                    v-if="expasionModel.location"
+                    :field="field"
+                    v-model="locale.formTemplate[field.name || keyField]"
+                  />
+                </keep-alive>
+              </template>
             </div>
           </q-expansion-item>
           <!--Categories-->
@@ -113,10 +121,19 @@
           <!--Media-->
           <q-expansion-item icon="fas fa-photo-video" class="box-collapse q-mb-md" group="fromAdExpansion"
                             header-class="header-container" expand-separator
-                            :label="$trp('iad.cms.form.photosAndVideo')">
+                            :label="$trp('iad.cms.form.photosAndVideo')"
+                            v-model="expasionModel.media">
             <div class="q-pa-md">
-              <dynamic-field v-for="(field, keyField) in formFields.media" :key="keyField" :field="field"
-                             v-model="form[field.name || keyField]" :item-id="adId" />
+              <template v-for="(field, keyField) in formFields.media" :key="keyField" >
+                <keep-alive>
+                  <dynamic-field
+                    v-if="expasionModel.media"
+                    v-model="form[field.name || keyField]"
+                    :item-id="adId"
+                    :field="field"
+                  />
+                </keep-alive>
+              </template>
             </div>
           </q-expansion-item>
           <!--Prices-->
@@ -267,7 +284,11 @@ export default {
           requestable_type: 'Modules\\Iad\\Entities\\Ad'
         }
       },
-      tmpMainCategories: {}
+      tmpMainCategories: {},
+      expasionModel: {
+        location: this.$route.params?.id ? false : true,
+        media: false
+      }
     };
   },
   computed: {
@@ -979,8 +1000,8 @@ export default {
         minPrice: adMinPrice,
         maxPrice: adMaxPrice,
         fields: fieldsData,
-        mediasSingle: formData.mediasSingle,
-        mediasMulti: formData.mediasMulti,
+        mediasSingle: formData?.mediasSingle || {},
+        mediasMulti: formData?.mediasMulti || {},
         schedule: formData.schedule
       };
     },
