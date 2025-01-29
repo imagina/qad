@@ -33,6 +33,10 @@ export default {
             },
             {name: 'name', label: this.$tr('isite.cms.form.name'), field: 'title', align: 'left'},
             {
+              name: 'categories', label: this.$tr('isite.cms.form.category'), field: 'categories', align: 'left',
+              format: val => val && val.length ? val.map(x => x.title).join(', ') : '-'
+            },
+            {
               name: 'user', label: this.$tr('iad.cms.form.user'), field: 'user', align: 'left',
               format: val => val ? `${val.firstName || ''} ${val.lastName || ''}` : '-'
             },
