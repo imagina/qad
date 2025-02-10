@@ -446,10 +446,8 @@ export default {
             value: null,
             type: 'select',
             props: {
-              label: this.$tr('isite.cms.label.country') + '*',
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ]
+              label: this.$tr('isite.cms.label.country'),
+              clearable: true
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qlocations.countries',
@@ -460,11 +458,9 @@ export default {
             value: null,
             type: 'select',
             props: {
-              label: this.$tr('isite.cms.label.department') + '*',
+              label: this.$tr('isite.cms.label.department'),
               readonly: (this.locale.form.countryId ? false : true),
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ]
+              clearable: true
             },
             loadOptions: {
               apiRoute: this.locale.form.countryId ? 'apiRoutes.qlocations.provinces' : false,
@@ -476,11 +472,9 @@ export default {
             value: null,
             type: 'select',
             props: {
-              label: this.$tr('isite.cms.form.city') + '*',
+              label: this.$tr('isite.cms.form.city'),
               readonly: (this.locale.form.provinceId ? false : true),
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ]
+              clearable: true
             },
             loadOptions: {
               apiRoute: this.locale.form.provinceId ? 'apiRoutes.qlocations.cities' : false,
