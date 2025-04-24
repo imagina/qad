@@ -55,7 +55,7 @@ export default {
         },
         update: {
           title: this.$tr('iblog.cms.updateCategory'),
-          requestParams: {include: 'parent,buildable'}
+          requestParams: {include: 'parent,buildable,locatable'}
         },
         delete: true,
         formLeft: {
@@ -154,6 +154,55 @@ export default {
               select: {label: 'title', id: 'id'},
               requestParams: {include: 'parent'}
             }
+          },
+          countryId: {
+            value: null,
+            type: 'select',
+            fakeFieldName: 'locatable',
+            props: {
+              label: this.$tr('isite.cms.label.country'),
+              clearable: true,
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qlocations.countries',
+              select: { label: 'name', id: 'id' },
+            },
+          },
+          provinceId: {
+            value: null,
+            type: 'select',
+            fakeFieldName: 'locatable',
+            props: {
+              label: this.$tr('isite.cms.label.department'),
+              readonly: this.crudInfo.locatable?.countryId ? false : true,
+              clearable: true,
+            },
+            loadOptions: {
+              apiRoute: this.crudInfo.locatable?.countryId
+                ? 'apiRoutes.qlocations.provinces'
+                : false,
+              select: { label: 'name', id: 'id' },
+              requestParams: { filter: { country: this.crudInfo.locatable?.countryId } },
+            },
+          },
+          cityId: {
+            value: null,
+            type: 'select',
+            fakeFieldName: 'locatable',
+            props: {
+              label: this.$tr('isite.cms.form.city'),
+              readonly: this.crudInfo.locatable?.provinceId ? false : true,
+              clearable: true,
+            },
+            loadOptions: {
+              apiRoute: this.crudInfo.locatable?.provinceId
+                ? 'apiRoutes.qlocations.cities'
+                : false,
+              select: { label: 'name', id: 'id' },
+              requestParams: {
+                filter: { province_id: this.crudInfo.locatable?.provinceId },
+              },
+            },
           },
           mediasSingle: {
             name: 'mediasSingle',
