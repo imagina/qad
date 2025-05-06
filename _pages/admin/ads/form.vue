@@ -829,7 +829,7 @@ export default {
         let requestParams = {
           refresh: true,
           params: {
-            include: 'fields,categories,adUps,requestable.status,buildable',
+            include: 'fields,categories,adUps,requestable.status,buildable,locatable',
             filter: { allTranslations: true }
           }
         };
@@ -867,6 +867,11 @@ export default {
           if (response.data.buildable) {
             this.locale.form.buildableType = response.data.buildable.type
             this.locale.form.buildableLayoutId = response.data.buildable.layoutId
+          }
+          if (response.data.locatable) {
+            this.locale.form.countryId = response.data.locatable.countryId
+            this.locale.form.provinceId = response.data.locatable.provinceId
+            this.locale.form.cityId = response.data.locatable.cityId
           }
           resolve(response.data);
         }).catch(error => {
@@ -973,14 +978,24 @@ export default {
 
       const buildableType = rest.buildableType;
       const buildableLayoutId = rest.buildableLayoutId;
+      const countryId = rest.countryId;
+      const provinceId = rest.provinceId;
+      const cityId = rest.cityId;
+      //Removde items
       delete rest.buildableType;
       delete rest.buildableLayoutId;
+      delete  rest.countryId;
+      delete  rest.provinceId;
+      delete rest.cityId;
 
       return {
         ...rest,
         categories: formData.categories,
         lat: mapInfo.lat,
         lng: mapInfo.lng,
+        locatable: {
+          countryId, provinceId, cityId
+        },
         options: {
           ...formData.options,
           prices: pricesData,
