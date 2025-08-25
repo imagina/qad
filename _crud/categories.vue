@@ -123,7 +123,7 @@ export default {
               requestParams: {
                 filter: {
                   type: this.crudInfo.buildable?.type ?? '',
-                  entity_type: "Modules\\Iad\\Entities\\Category"
+                  entity_type: "Modules\\Iad\\Models\\Category"
                 }
               }
             }
@@ -211,7 +211,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.firstImage'),
               zone: 'mainimage',
-              entity: "Modules\\Iad\\Entities\\Category",
+              entity: "Modules\\Iad\\Models\\Category",
               entityId: null
             }
           },
@@ -222,7 +222,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.secondaryImage'),
               zone: 'secondaryimage',
-              entity: "Modules\\Iad\\Entities\\Category",
+              entity: "Modules\\Iad\\Models\\Category",
               entityId: null
             }
           }
@@ -243,7 +243,7 @@ export default {
         if (config[moduleName]) response[moduleName] = config[moduleName]
       })
 
-      let moduleBuilderConfig = Object.values(response).flat().find(item => item.entity.value == "Modules\\Iad\\Entities\\Category")
+      let moduleBuilderConfig = Object.values(response).flat().find(item => item.entity.value == "Modules\\Iad\\Models\\Category")
       return moduleBuilderConfig?.types || []
     }
   },

@@ -281,7 +281,7 @@ export default {
         data: null,
         config: {
           type: 'requestCheckAd',
-          requestable_type: 'Modules\\Iad\\Entities\\Ad'
+          requestable_type: 'Modules\\Iad\\Models\\Ad'
         }
       },
       tmpMainCategories: {},
@@ -434,7 +434,7 @@ export default {
               requestParams: {
                 filter: {
                   type: this.locale.formTemplate?.buildableType ?? '',
-                  entity_type: "Modules\\Iad\\Entities\\Ad"
+                  entity_type: "Modules\\Iad\\Models\\Ad"
                 }
               }
             }
@@ -587,7 +587,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.label.mainImage'),
               zone: 'mainimage',
-              entity: 'Modules\\Iad\\Entities\\Ad',
+              entity: 'Modules\\Iad\\Models\\Ad',
               entityId: null,
               accept: 'images',
               directUpload: this.settings.selectFromMedia ? false : true
@@ -600,7 +600,7 @@ export default {
             props: {
               label: `${this.$tr('isite.cms.form.gallery')} (${this.$trp('isite.cms.label.image')})`,
               zone: 'gallery',
-              entity: 'Modules\\Iad\\Entities\\Ad',
+              entity: 'Modules\\Iad\\Models\\Ad',
               entityId: null,
               multiple: true,
               accept: 'images',
@@ -614,7 +614,7 @@ export default {
             props: {
               label: `Videos`,
               zone: 'videos',
-              entity: 'Modules\\Iad\\Entities\\Ad',
+              entity: 'Modules\\Iad\\Models\\Ad',
               entityId: null,
               multiple: true,
               maxFiles: 3,
@@ -741,7 +741,7 @@ export default {
       Object.keys(config).forEach(moduleName => {
         if (config[moduleName]) response[moduleName] = config[moduleName]
       })
-      let moduleBuilderConfig = Object.values(response).flat().find(item => item.entity.value == "Modules\\Iad\\Entities\\Ad")
+      let moduleBuilderConfig = Object.values(response).flat().find(item => item.entity.value == "Modules\\Iad\\Models\\Ad")
       return this.$clone(moduleBuilderConfig?.types || [])
     }
   },
